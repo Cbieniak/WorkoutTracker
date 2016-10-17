@@ -7,15 +7,29 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var container: NSPersistentContainer!
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        container = NSPersistentContainer(name: "Datamodel")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error {
+                fatalError("Unresolved error \(error)")
+            }
+            self.container.viewContext.perform({
+                print("test(")
+            })
+        })
+        
         return true
     }
 
