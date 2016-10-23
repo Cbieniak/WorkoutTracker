@@ -58,12 +58,21 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
         return cell
         
     }
+
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+        
+        let edc = sb.instantiateViewController(withIdentifier: "ExerciseDetailViewController") as! ExerciseDetailViewController
+        
+        edc.exercise = Datamodel.allExercises()[indexPath.row]
+        
+        self.navigationController?.pushViewController(edc, animated: true)
+        
        
     }
     

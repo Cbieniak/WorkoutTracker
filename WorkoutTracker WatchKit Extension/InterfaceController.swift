@@ -32,9 +32,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 row.titleRow.setText(exercises[i].name)
                 
             }
-            
-               //self.tableView.setRowTypes(exercises.flatMap { $0.name })
-            
+        
         }
     }
 
