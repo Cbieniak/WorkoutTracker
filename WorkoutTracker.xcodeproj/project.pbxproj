@@ -11,6 +11,8 @@
 		2675ED31A1CC56F8B1498453 /* Pods_WorkoutTracker_WatchKit_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE640C18049E1C97C8D34E0 /* Pods_WorkoutTracker_WatchKit_Extension.framework */; };
 		30389FC57FF9BAA9E0375221 /* Pods_WorkoutTracker_WatchKit_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3BF11F383883912087F08F /* Pods_WorkoutTracker_WatchKit_App.framework */; };
 		9937277D3240385F1BACEBF8 /* Pods_WorkoutTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D168094D52FC0D3666F929C6 /* Pods_WorkoutTrackerTests.framework */; };
+		C62EFF3F1DB97D3600125BDB /* WatchDatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */; };
+		C62EFF401DB97DDF00125BDB /* WatchDatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */; };
 		C6F74B9F1DB3643300871BA7 /* WorkoutTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74B9E1DB3643300871BA7 /* WorkoutTrackerTests.swift */; };
 		C6F74BA41DB3643300871BA7 /* WorkoutTracker WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C6F74BA31DB3643300871BA7 /* WorkoutTracker WatchKit App.app */; };
 		C6F74BAA1DB3643300871BA7 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6F74BA81DB3643300871BA7 /* Interface.storyboard */; };
@@ -23,7 +25,6 @@
 		C6F74BDA1DB364EF00871BA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6F74BD11DB364EF00871BA7 /* Assets.xcassets */; };
 		C6F74BDB1DB364EF00871BA7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6F74BD21DB364EF00871BA7 /* LaunchScreen.storyboard */; };
 		C6F74BDC1DB364EF00871BA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6F74BD41DB364EF00871BA7 /* Main.storyboard */; };
-		C6F74BDD1DB364EF00871BA7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6F74BD61DB364EF00871BA7 /* Info.plist */; };
 		C6F74BDE1DB364EF00871BA7 /* ExerciseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BD81DB364EF00871BA7 /* ExerciseDetailViewController.swift */; };
 		C6F74BE21DB366F100871BA7 /* Datamodel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BE01DB366F100871BA7 /* Datamodel.xcdatamodeld */; };
 		C6F74BED1DB3690D00871BA7 /* Exercise+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BEB1DB3690D00871BA7 /* Exercise+CoreDataClass.swift */; };
@@ -34,6 +35,9 @@
 		C6F74BF21DB3690D00871BA7 /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BEC1DB3690D00871BA7 /* Exercise+CoreDataProperties.swift */; };
 		C6F74BF41DB36A0200871BA7 /* ExerciseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BF31DB36A0200871BA7 /* ExerciseListViewController.swift */; };
 		C6F74BF51DB36A0200871BA7 /* ExerciseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BF31DB36A0200871BA7 /* ExerciseListViewController.swift */; };
+		C6F74C161DB637FC00871BA7 /* Datamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74C151DB637FB00871BA7 /* Datamodel.swift */; };
+		C6F74C171DB6394B00871BA7 /* Datamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74C151DB637FB00871BA7 /* Datamodel.swift */; };
+		C6F74C181DB63CC400871BA7 /* Datamodel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BE01DB366F100871BA7 /* Datamodel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +101,7 @@
 		7464659187E919142A4EBFEF /* Pods_WorkoutTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkoutTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97F81E929F59226BB6AE624B /* Pods-WorkoutTracker WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkoutTracker WatchKit Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WorkoutTracker WatchKit Extension/Pods-WorkoutTracker WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		AB3BF11F383883912087F08F /* Pods_WorkoutTracker_WatchKit_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkoutTracker_WatchKit_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDatamodel.swift; sourceTree = "<group>"; };
 		C6F74B861DB3643200871BA7 /* WorkoutTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6F74B9A1DB3643300871BA7 /* WorkoutTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6F74B9E1DB3643300871BA7 /* WorkoutTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTrackerTests.swift; sourceTree = "<group>"; };
@@ -120,6 +125,10 @@
 		C6F74BEB1DB3690D00871BA7 /* Exercise+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C6F74BEC1DB3690D00871BA7 /* Exercise+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Exercise+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C6F74BF31DB36A0200871BA7 /* ExerciseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseListViewController.swift; sourceTree = "<group>"; };
+		C6F74C121DB6356500871BA7 /* WorkoutTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WorkoutTracker.entitlements; sourceTree = "<group>"; };
+		C6F74C131DB6358600871BA7 /* WorkoutTracker WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WorkoutTracker WatchKit App.entitlements"; sourceTree = "<group>"; };
+		C6F74C141DB6358C00871BA7 /* WorkoutTracker WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WorkoutTracker WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		C6F74C151DB637FB00871BA7 /* Datamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Datamodel.swift; sourceTree = "<group>"; };
 		D168094D52FC0D3666F929C6 /* Pods_WorkoutTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkoutTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -221,6 +230,7 @@
 		C6F74BA71DB3643300871BA7 /* WorkoutTracker WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
+				C6F74C131DB6358600871BA7 /* WorkoutTracker WatchKit App.entitlements */,
 				C6F74BA81DB3643300871BA7 /* Interface.storyboard */,
 				C6F74BAB1DB3643300871BA7 /* Assets.xcassets */,
 				C6F74BAD1DB3643300871BA7 /* Info.plist */,
@@ -231,6 +241,7 @@
 		C6F74BB61DB3643300871BA7 /* WorkoutTracker WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				C6F74C141DB6358C00871BA7 /* WorkoutTracker WatchKit Extension.entitlements */,
 				C6F74BB71DB3643300871BA7 /* InterfaceController.swift */,
 				C6F74BB91DB3643300871BA7 /* ExtensionDelegate.swift */,
 				C6F74BBB1DB3643300871BA7 /* Assets.xcassets */,
@@ -242,6 +253,7 @@
 		C6F74BCE1DB364EF00871BA7 /* WorkoutTracker */ = {
 			isa = PBXGroup;
 			children = (
+				C6F74C121DB6356500871BA7 /* WorkoutTracker.entitlements */,
 				C6F74BDF1DB366DE00871BA7 /* Model */,
 				C6F74BCF1DB364EF00871BA7 /* Application */,
 				C6F74BD11DB364EF00871BA7 /* Assets.xcassets */,
@@ -276,6 +288,8 @@
 				C6F74BEB1DB3690D00871BA7 /* Exercise+CoreDataClass.swift */,
 				C6F74BEC1DB3690D00871BA7 /* Exercise+CoreDataProperties.swift */,
 				C6F74BE01DB366F100871BA7 /* Datamodel.xcdatamodeld */,
+				C6F74C151DB637FB00871BA7 /* Datamodel.swift */,
+				C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -380,6 +394,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 74C5SG6832;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					C6F74B991DB3643300871BA7 = {
 						CreatedOnToolsVersion = 8.0;
@@ -391,11 +410,21 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 74C5SG6832;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					C6F74BB11DB3643300871BA7 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 74C5SG6832;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -425,7 +454,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6F74BDD1DB364EF00871BA7 /* Info.plist in Resources */,
 				C6F74BDC1DB364EF00871BA7 /* Main.storyboard in Resources */,
 				C6F74BDA1DB364EF00871BA7 /* Assets.xcassets in Resources */,
 				C6F74BDB1DB364EF00871BA7 /* LaunchScreen.storyboard in Resources */,
@@ -632,9 +660,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6F74BF41DB36A0200871BA7 /* ExerciseListViewController.swift in Sources */,
+				C62EFF3F1DB97D3600125BDB /* WatchDatamodel.swift in Sources */,
 				C6F74BDE1DB364EF00871BA7 /* ExerciseDetailViewController.swift in Sources */,
 				C6F74BE21DB366F100871BA7 /* Datamodel.xcdatamodeld in Sources */,
 				C6F74BF01DB3690D00871BA7 /* Exercise+CoreDataProperties.swift in Sources */,
+				C6F74C161DB637FC00871BA7 /* Datamodel.swift in Sources */,
 				C6F74BD91DB364EF00871BA7 /* AppDelegate.swift in Sources */,
 				C6F74BED1DB3690D00871BA7 /* Exercise+CoreDataClass.swift in Sources */,
 			);
@@ -655,9 +685,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6F74C171DB6394B00871BA7 /* Datamodel.swift in Sources */,
+				C6F74C181DB63CC400871BA7 /* Datamodel.xcdatamodeld in Sources */,
 				C6F74BBA1DB3643300871BA7 /* ExtensionDelegate.swift in Sources */,
 				C6F74BF21DB3690D00871BA7 /* Exercise+CoreDataProperties.swift in Sources */,
 				C6F74BB81DB3643300871BA7 /* InterfaceController.swift in Sources */,
+				C62EFF401DB97DDF00125BDB /* WatchDatamodel.swift in Sources */,
 				C6F74BEF1DB3690D00871BA7 /* Exercise+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -728,6 +761,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -777,6 +811,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -806,6 +841,7 @@
 			baseConfigurationReference = 97F81E929F59226BB6AE624B /* Pods-WorkoutTracker WatchKit Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "WorkoutTracker WatchKit Extension/WorkoutTracker WatchKit Extension.entitlements";
 				DEVELOPMENT_TEAM = 74C5SG6832;
 				INFOPLIST_FILE = "WorkoutTracker WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -824,6 +860,7 @@
 			baseConfigurationReference = 4E1637494DD577B43950064E /* Pods-WorkoutTracker WatchKit Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "WorkoutTracker WatchKit Extension/WorkoutTracker WatchKit Extension.entitlements";
 				DEVELOPMENT_TEAM = 74C5SG6832;
 				INFOPLIST_FILE = "WorkoutTracker WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -843,6 +880,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "WorkoutTracker WatchKit App/WorkoutTracker WatchKit App.entitlements";
 				DEVELOPMENT_TEAM = 74C5SG6832;
 				IBSC_MODULE = WorkoutTracker_WatchKit_Extension;
 				INFOPLIST_FILE = "WorkoutTracker WatchKit App/Info.plist";
@@ -862,6 +900,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "WorkoutTracker WatchKit App/WorkoutTracker WatchKit App.entitlements";
 				DEVELOPMENT_TEAM = 74C5SG6832;
 				IBSC_MODULE = WorkoutTracker_WatchKit_Extension;
 				INFOPLIST_FILE = "WorkoutTracker WatchKit App/Info.plist";
@@ -880,6 +919,7 @@
 			baseConfigurationReference = 38610E99F82AF591F2F8FD76 /* Pods-WorkoutTracker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WorkoutTracker/WorkoutTracker.entitlements;
 				DEVELOPMENT_TEAM = 74C5SG6832;
 				INFOPLIST_FILE = WorkoutTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -894,6 +934,7 @@
 			baseConfigurationReference = 307251F6DED4D2ACAE240DD6 /* Pods-WorkoutTracker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WorkoutTracker/WorkoutTracker.entitlements;
 				DEVELOPMENT_TEAM = 74C5SG6832;
 				INFOPLIST_FILE = WorkoutTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

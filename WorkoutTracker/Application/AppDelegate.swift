@@ -8,27 +8,34 @@
 
 import UIKit
 import CoreData
+import WatchConnectivity
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var session: WCSession? {
+        didSet {
+            if let session = session {
+                session.delegate = self
+                session.activate()
+            }
+        }
+    }
 
     var window: UIWindow?
     
-    var container: NSPersistentContainer!
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        if WCSession.isSupported() {
+            session = WCSession.default()
+        }
         // Override point for customization after application launch.
         
-        container = NSPersistentContainer(name: "Datamodel")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error {
-                fatalError("Unresolved error \(error)")
-            }
-            self.container.viewContext.perform({
-                print("test(")
-            })
-        })
+//        let t = Datamodel.allExercises()
+//        let j = Datamodel.allExercises(Datamodel.sharedInstance.binaryContainer)
+        
+//        session?.transferFile(Datamodel.sharedInstance.binaryUrl, metadata: nil)
+    
         
         return true
     }
@@ -56,5 +63,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+extension AppDelegate: WCSessionDelegate {
+    
+    public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
+    
+    
+    /** ------------------------- iOS App State For Watch ------------------------ */
+    
+    /** Called when the session can no longer be used to modify or add any new transfers and, all interactive messages will be cancelled, but delegate callbacks for background transfers can still occur. This will happen when the selected watch is being changed. */
+    @available(iOS 9.3, *)
+    public func sessionDidBecomeInactive(_ session: WCSession) {}
+    
+    
+    /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
+    @available(iOS 9.3, *)
+    public func sessionDidDeactivate(_ session: WCSession){}
+    
+//    public func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Swift.Void) {
+//        
+//        print("getting it done")
+//        replyHandler(["exercises": Datamodel.allExercises().flatMap {$0.toData()}])
+//    }
+    
+    public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        
+        if let url = Datamodel().container.persistentStoreCoordinator.persistentStores.first?.url {
+        
+            session.transferFile(url, metadata: nil)
+        }
+    }
+    
 }
 

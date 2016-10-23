@@ -23,7 +23,7 @@ class ExerciseDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        context = (UIApplication.shared.delegate as! AppDelegate).container.viewContext
+        context = Datamodel().container.viewContext
         exercise = Exercise(context: context)
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -32,16 +32,16 @@ class ExerciseDetailViewController: UIViewController {
     @IBAction func saveTouchedUpInside(_ sender: AnyObject) {
         exercise.name = nameTextField.text
         if let timeText = timeTextField.text, !timeText.isEmpty {
-           exercise.time = Double(timeText)!
+            exercise.time = NSNumber(value:Int(timeText)!)
         }
         if let distanceText = distanceTextField.text, !distanceText.isEmpty {
-            exercise.distance = Double(distanceText)!
+            exercise.distance =  NSNumber(value:Int(distanceText)!)
         }
         if let weightText = weightTextField.text, !weightText.isEmpty {
-            exercise.weight = Int32(weightText)!
+            exercise.weight = NSNumber(value:Int(weightText)!)
         }
         if let repsText = repsTextField.text, !repsText.isEmpty {
-            exercise.reps = Int32(repsText)!
+            exercise.reps = NSNumber(value:Int(repsText)!)
         }
        
         do {

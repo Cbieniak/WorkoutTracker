@@ -17,7 +17,7 @@ class ExerciseListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        context = (UIApplication.shared.delegate as! AppDelegate).container.viewContext
+        context = Datamodel().container.viewContext
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
@@ -43,20 +43,9 @@ class ExerciseListViewController: UIViewController {
 extension ExerciseListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let count = Datamodel.allExercises().count
         
-        let request: NSFetchRequest = Exercise.fetchRequest()
-        request.resultType = NSFetchRequestResultType.countResultType
-        do {
-            let searchResults = try context.fetch(request as! NSFetchRequest<NSFetchRequestResult>) as! [NSNumber]
-            
-           
-            return searchResults.first!.intValue
-        } catch {
-            print("Error with request: \(error)")
-        }
-        
-        return 0
-        
+        return count
     }
     
     
