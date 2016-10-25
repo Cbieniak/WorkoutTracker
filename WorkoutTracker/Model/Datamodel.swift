@@ -66,12 +66,21 @@ public class Datamodel {
             try results = nuContext.fetch(Exercise.fetchRequest())
             
             return results
-//             print("\(searchResults)")
-////            return searchResults.map { exercise in
-////                return exercise as! Exercise
-////                //return Exercise(dictionary: exercise as! [String: AnyObject])
-////            }
-           // return searchResults as! [Exercise]
+        } catch {
+            print("Error with request: \(error)")
+        }
+        return []
+    }
+    
+    static func allSessions(_ container: NSPersistentContainer = Datamodel.sharedInstance.container) -> [Session] {
+        let nuContext = container.viewContext
+        
+        var results: [Session]
+        do {
+            
+            try results = nuContext.fetch(Session.fetchRequest())
+            
+            return results
         } catch {
             print("Error with request: \(error)")
         }

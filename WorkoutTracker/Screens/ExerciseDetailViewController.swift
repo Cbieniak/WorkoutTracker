@@ -20,6 +20,7 @@ class ExerciseDetailViewController: UIViewController {
     @IBOutlet weak var distanceTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var repsTextField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +29,14 @@ class ExerciseDetailViewController: UIViewController {
             exercise = Exercise(context: context)
             exercise.sessions = NSSet()
         } else {
+            exercise = context.object(with: exercise.objectID) as! Exercise
             self.nameTextField.text = exercise.name
         }
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TEST")
+
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -38,6 +45,8 @@ class ExerciseDetailViewController: UIViewController {
     @IBAction func saveTouchedUpInside(_ sender: AnyObject) {
         exercise.name = nameTextField.text
         let session = Session(context: context)
+        
+        session.date = NSDate()
         
         if let timeText = timeTextField.text, !timeText.isEmpty {
             session.time = Double(timeText)!
@@ -52,15 +61,34 @@ class ExerciseDetailViewController: UIViewController {
             session.reps = Int32(repsText)!
         }
         exercise.sessions.adding(session)
+        session.exercise = exercise
         do {
             try self.context.save()
+            self.tableView.reloadData()
         } catch {
             print("error\(error)")
         }
         
-        _ = self.navigationController?.popViewController(animated: true)
+        //_ = self.navigationController?.popViewController(animated: true)
         
     }
 
+}
+
+extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.exercise.sessions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
+        cell.backgroundColor = .blue
+        return cell
+    }
+
+    
+    
+    
 }
 
