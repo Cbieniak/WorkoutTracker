@@ -12,6 +12,8 @@
 		30389FC57FF9BAA9E0375221 /* Pods_WorkoutTracker_WatchKit_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3BF11F383883912087F08F /* Pods_WorkoutTracker_WatchKit_App.framework */; };
 		9937277D3240385F1BACEBF8 /* Pods_WorkoutTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D168094D52FC0D3666F929C6 /* Pods_WorkoutTrackerTests.framework */; };
 		C6196D8A1DBF74BA00AFDFEB /* SessionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6196D891DBF74BA00AFDFEB /* SessionListViewController.swift */; };
+		C6196D901DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6196D8E1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift */; };
+		C6196D911DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6196D8F1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib */; };
 		C62EFF3F1DB97D3600125BDB /* WatchDatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */; };
 		C62EFF401DB97DDF00125BDB /* WatchDatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */; };
 		C6BB0C711DBCDA0D006C2BA7 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C6F1DBCDA0D006C2BA7 /* Session+CoreDataClass.swift */; };
@@ -107,6 +109,8 @@
 		97F81E929F59226BB6AE624B /* Pods-WorkoutTracker WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkoutTracker WatchKit Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WorkoutTracker WatchKit Extension/Pods-WorkoutTracker WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		AB3BF11F383883912087F08F /* Pods_WorkoutTracker_WatchKit_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkoutTracker_WatchKit_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6196D891DBF74BA00AFDFEB /* SessionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionListViewController.swift; sourceTree = "<group>"; };
+		C6196D8E1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
+		C6196D8F1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExerciseCollectionViewCell.xib; sourceTree = "<group>"; };
 		C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDatamodel.swift; sourceTree = "<group>"; };
 		C6BB0C6F1DBCDA0D006C2BA7 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C6BB0C701DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -202,6 +206,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C6196D8D1DBF7DDC00AFDFEB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C6196D8E1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift */,
+				C6196D8F1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		C6F74B7D1DB3643200871BA7 = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +274,7 @@
 		C6F74BCE1DB364EF00871BA7 /* WorkoutTracker */ = {
 			isa = PBXGroup;
 			children = (
+				C6196D8D1DBF7DDC00AFDFEB /* Cell */,
 				C6F74C121DB6356500871BA7 /* WorkoutTracker.entitlements */,
 				C6F74BDF1DB366DE00871BA7 /* Model */,
 				C6F74BCF1DB364EF00871BA7 /* Application */,
@@ -467,6 +481,7 @@
 			files = (
 				C6F74BDC1DB364EF00871BA7 /* Main.storyboard in Resources */,
 				C6F74BDA1DB364EF00871BA7 /* Assets.xcassets in Resources */,
+				C6196D911DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib in Resources */,
 				C6F74BDB1DB364EF00871BA7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -678,6 +693,7 @@
 				C6F74BF01DB3690D00871BA7 /* Exercise+CoreDataProperties.swift in Sources */,
 				C6F74C161DB637FC00871BA7 /* Datamodel.swift in Sources */,
 				C6F74BD91DB364EF00871BA7 /* AppDelegate.swift in Sources */,
+				C6196D901DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift in Sources */,
 				C6196D8A1DBF74BA00AFDFEB /* SessionListViewController.swift in Sources */,
 				C6BB0C731DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift in Sources */,
 				C6F74BED1DB3690D00871BA7 /* Exercise+CoreDataClass.swift in Sources */,

@@ -20,6 +20,7 @@ class ExerciseListViewController: UIViewController {
         context = Datamodel().container.viewContext
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        self.collectionView.register(UINib.init(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ExerciseCollectionViewCell")
         self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         
@@ -51,9 +52,11 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExerciseCollectionViewCell", for: indexPath) as! ExerciseCollectionViewCell
         
         cell.backgroundColor = .red
+        
+        cell.titleLabel.text = Datamodel.allExercises()[indexPath.row].name
         
         return cell
         
