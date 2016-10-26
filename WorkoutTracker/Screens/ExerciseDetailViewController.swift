@@ -83,12 +83,8 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
-        cell.backgroundColor = .blue
+        cell.textLabel?.text = String(describing:(self.exercise.sessions.allObjects[indexPath.row] as! Session).date!)
         return cell
     }
-
-    
-    
-    
 }
 
