@@ -18,5 +18,6 @@ extension Exercise {
 
     @NSManaged public var name: String?
     @NSManaged public var sessions: NSSet
+    @NSManaged public var trackedAttributes: NSArray
     
 }
