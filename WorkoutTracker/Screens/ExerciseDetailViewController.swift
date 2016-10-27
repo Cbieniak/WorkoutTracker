@@ -20,7 +20,14 @@ class ExerciseDetailViewController: UIViewController {
     @IBOutlet weak var distanceTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var repsTextField: UITextField!
+    @IBOutlet weak var trackNameButton: UIButton!
+    @IBOutlet weak var trackTimeButton: UIButton!
+    @IBOutlet weak var trackDistanceButton: UIButton!
+    @IBOutlet weak var trackWeightButton: UIButton!
+    @IBOutlet weak var trackRepsButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    
+    var dictionary: [UIButton : String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +35,7 @@ class ExerciseDetailViewController: UIViewController {
         if (exercise == nil) {
             exercise = Exercise(context: context)
             exercise.sessions = NSSet()
+            exercise.trackedAttributes = NSArray()
         } else {
             exercise = context.object(with: exercise.objectID) as! Exercise
             self.nameTextField.text = exercise.name
@@ -36,8 +44,15 @@ class ExerciseDetailViewController: UIViewController {
         self.tableView.delegate = self
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TEST")
-
         
+        //map
+        dictionary = [:]
+        dictionary[trackNameButton] = "name"
+        dictionary[trackTimeButton] = "time"
+        dictionary[trackWeightButton] = "weight"
+        dictionary[trackRepsButton] = "reps"
+        dictionary[trackDistanceButton] = "distance"
+
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -72,6 +87,14 @@ class ExerciseDetailViewController: UIViewController {
         //_ = self.navigationController?.popViewController(animated: true)
         
     }
+    
+    @IBAction func buttonTouchedUpInside(_ sender: UIButton) {
+        sender.setTitle("tracked", for: .normal)
+        let mutableArray: NSMutableArray = self.exercise.trackedAttributes.mutableCopy() as! NSMutableArray
+        mutableArray.add(dictionary[sender] ?? "name")
+
+        self.exercise.trackedAttributes = mutableArray
+    }
 
 }
 
@@ -83,7 +106,8 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
-        cell.textLabel?.text = String(describing:(self.exercise.sessions.allObjects[indexPath.row] as! Session).date!)
+        let session = self.exercise.sessions.allObjects[indexPath.row] as! Session
+        cell.textLabel?.text =  self.exercise.trackedAttributes.reduce("", { $0! + " " + String(describing: (session.value(forKey: $1 as! String))!)})
         return cell
     }
 }
