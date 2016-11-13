@@ -20,9 +20,10 @@
 		C6BB0C721DBCDA0D006C2BA7 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C6F1DBCDA0D006C2BA7 /* Session+CoreDataClass.swift */; };
 		C6BB0C731DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C701DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift */; };
 		C6BB0C741DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C701DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift */; };
+		C6EA2EE91DCF416000C2DCC3 /* AddSessionInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6EA2EE81DCF416000C2DCC3 /* AddSessionInterfaceController.swift */; };
+		C6EA2EEC1DCF443800C2DCC3 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6EA2EEA1DCF443800C2DCC3 /* Interface.storyboard */; };
 		C6F74B9F1DB3643300871BA7 /* WorkoutTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74B9E1DB3643300871BA7 /* WorkoutTrackerTests.swift */; };
 		C6F74BA41DB3643300871BA7 /* WorkoutTracker WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C6F74BA31DB3643300871BA7 /* WorkoutTracker WatchKit App.app */; };
-		C6F74BAA1DB3643300871BA7 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6F74BA81DB3643300871BA7 /* Interface.storyboard */; };
 		C6F74BAC1DB3643300871BA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6F74BAB1DB3643300871BA7 /* Assets.xcassets */; };
 		C6F74BB31DB3643300871BA7 /* WorkoutTracker WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C6F74BB21DB3643300871BA7 /* WorkoutTracker WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C6F74BB81DB3643300871BA7 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BB71DB3643300871BA7 /* InterfaceController.swift */; };
@@ -114,12 +115,13 @@
 		C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDatamodel.swift; sourceTree = "<group>"; };
 		C6BB0C6F1DBCDA0D006C2BA7 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C6BB0C701DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C6EA2EE81DCF416000C2DCC3 /* AddSessionInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSessionInterfaceController.swift; sourceTree = "<group>"; };
+		C6EA2EEB1DCF443800C2DCC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		C6F74B861DB3643200871BA7 /* WorkoutTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6F74B9A1DB3643300871BA7 /* WorkoutTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6F74B9E1DB3643300871BA7 /* WorkoutTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTrackerTests.swift; sourceTree = "<group>"; };
 		C6F74BA01DB3643300871BA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6F74BA31DB3643300871BA7 /* WorkoutTracker WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WorkoutTracker WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6F74BA91DB3643300871BA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		C6F74BAB1DB3643300871BA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C6F74BAD1DB3643300871BA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6F74BB21DB3643300871BA7 /* WorkoutTracker WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WorkoutTracker WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -251,8 +253,8 @@
 		C6F74BA71DB3643300871BA7 /* WorkoutTracker WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
+				C6EA2EEA1DCF443800C2DCC3 /* Interface.storyboard */,
 				C6F74C131DB6358600871BA7 /* WorkoutTracker WatchKit App.entitlements */,
-				C6F74BA81DB3643300871BA7 /* Interface.storyboard */,
 				C6F74BAB1DB3643300871BA7 /* Assets.xcassets */,
 				C6F74BAD1DB3643300871BA7 /* Info.plist */,
 			);
@@ -267,6 +269,7 @@
 				C6F74BB91DB3643300871BA7 /* ExtensionDelegate.swift */,
 				C6F74BBB1DB3643300871BA7 /* Assets.xcassets */,
 				C6F74BBD1DB3643300871BA7 /* Info.plist */,
+				C6EA2EE81DCF416000C2DCC3 /* AddSessionInterfaceController.swift */,
 			);
 			path = "WorkoutTracker WatchKit Extension";
 			sourceTree = "<group>";
@@ -497,8 +500,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6EA2EEC1DCF443800C2DCC3 /* Interface.storyboard in Resources */,
 				C6F74BAC1DB3643300871BA7 /* Assets.xcassets in Resources */,
-				C6F74BAA1DB3643300871BA7 /* Interface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +718,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6EA2EE91DCF416000C2DCC3 /* AddSessionInterfaceController.swift in Sources */,
 				C6BB0C741DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift in Sources */,
 				C6F74C171DB6394B00871BA7 /* Datamodel.swift in Sources */,
 				C6F74C181DB63CC400871BA7 /* Datamodel.xcdatamodeld in Sources */,
@@ -748,10 +752,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C6F74BA81DB3643300871BA7 /* Interface.storyboard */ = {
+		C6EA2EEA1DCF443800C2DCC3 /* Interface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C6F74BA91DB3643300871BA7 /* Base */,
+				C6EA2EEB1DCF443800C2DCC3 /* Base */,
 			);
 			name = Interface.storyboard;
 			sourceTree = "<group>";
@@ -820,7 +824,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG com.apple.CoreData.MigrationDebug";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;

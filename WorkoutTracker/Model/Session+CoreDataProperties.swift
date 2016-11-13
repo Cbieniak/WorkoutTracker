@@ -17,10 +17,10 @@ extension Session {
     }
 
     @NSManaged public var date: NSDate?
-    @NSManaged public var reps: Int32
+    @NSManaged public var reps: Double
     @NSManaged public var time: Double
     @NSManaged public var distance: Double
-    @NSManaged public var weight: Int32
+    @NSManaged public var weight: Double
     @NSManaged public var speed: Double
     @NSManaged public var exercise: Exercise?
 

@@ -31,7 +31,7 @@ class ExerciseDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        context = Datamodel().container.viewContext
+        context = Datamodel.sharedInstance.container.viewContext
         if (exercise == nil) {
             exercise = Exercise(context: context)
             exercise.sessions = NSSet()
@@ -70,10 +70,10 @@ class ExerciseDetailViewController: UIViewController {
             session.distance =  Double(distanceText)!
         }
         if let weightText = weightTextField.text, !weightText.isEmpty {
-            session.weight = Int32(weightText)!
+            session.weight = Double(weightText)!
         }
         if let repsText = repsTextField.text, !repsText.isEmpty {
-            session.reps = Int32(repsText)!
+            session.reps = Double(repsText)!
         }
         exercise.sessions.adding(session)
         session.exercise = exercise

@@ -35,7 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let j = Datamodel.allExercises(Datamodel.sharedInstance.binaryContainer)
         
 //        session?.transferFile(Datamodel.sharedInstance.binaryUrl, metadata: nil)
-    
+        var newURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        newURL = newURL.appendingPathComponent("dbackup.sqlite")
+
+        if let nuStore = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first {
+            //https://developer.apple.com/library/content/qa/qa1809/_index.html
+            try! Datamodel.sharedInstance.container.persistentStoreCoordinator.migratePersistentStore(nuStore, to: newURL, options: nil, withType: NSSQLiteStoreType)
+        }
         
         return true
     }
@@ -87,12 +93,43 @@ extension AppDelegate: WCSessionDelegate {
 //        replyHandler(["exercises": Datamodel.allExercises().flatMap {$0.toData()}])
 //    }
     
+    
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         
-        if let url = Datamodel().container.persistentStoreCoordinator.persistentStores.first?.url {
+        //create a new url migrate it
         
+//        var x = FileManager.default.containerURL(
+//                        forSecurityApplicationGroupIdentifier: PersistentContainer.sharedAppGroup)
+//                        x = x!.appendingPathComponent("dbackup.sqlite")
+//        var newURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//        newURL = newURL.appendingPathComponent("dbackup.sqlite")
+//       // do {
+//       
+//        if let nuStore = Datamodel().container.persistentStoreCoordinator.persistentStores.first {
+//            //https://developer.apple.com/library/content/qa/qa1809/_index.html
+//            nuStore
+//           try! Datamodel().container.persistentStoreCoordinator.migratePersistentStore(nuStore, to: newURL, options: nil, withType: NSSQLiteStoreType)
+//        }
+        
+        if let url = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first?.url {
+            
+//            do {
+//                let filePath: String = newURL.absoluteString
+//                var fileSize : UInt64
+//                let attr:NSDictionary? = try FileManager.default.attributesOfItem(atPath: filePath) as NSDictionary?
+//                if let _attr = attr {
+//                    fileSize = _attr.fileSize();
+//                    print(fileSize)
+//                }
+//                
+//            } catch {
+//                print(error)
+//            }
             session.transferFile(url, metadata: nil)
         }
+//        } catch {
+//            print(error)
+//        }
     }
     
 }

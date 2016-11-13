@@ -27,10 +27,12 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     var exercises: [Exercise] = [] {
         didSet {
             self.tableView.setNumberOfRows(exercises.count, withRowType: "temp")
-            for i  in 0...(exercises.count - 1) {
-                let row = self.tableView.rowController(at: i) as! ExerciseRow
-                row.titleRow.setText(exercises[i].name)
-                
+            if exercises.count > 0 {
+                for i  in 0...(exercises.count - 1) {
+                    let row = self.tableView.rowController(at: i) as! ExerciseRow
+                    row.titleRow.setText(exercises[i].name)
+                    
+                    }
             }
         
         }
@@ -42,7 +44,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         session = WCSession.default()
-        session!.activate()
         
         
     }
@@ -51,9 +52,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
-        
         // 3
-        self.tableView.setNumberOfRows(3, withRowType: "temp")
+        
+        if let container = WatchDataModel().container {
+            self.exercises = WatchDataModel.allExercises(container)
+        }
         
        //https://www.raywenderlich.com/117329/watchos-2-tutorial-part-4-watch-connectivity
         
@@ -72,69 +75,48 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                             print(error)
                     })
     
-//        session.sendMessage(["reference": "exercises"], replyHandler: { (response) -> Void in
-//            // 4
-//            
-//            print("\(response)")
-//            self.tableView.setRowTypes(["temp"])
-//            //self.tableView.setNumberOfRows().count, withRowType: "temp")
-//            
-//            let results:NSArray = response["exercises"] as! NSArray
-//            
-//            
-//            
-////            self.tableView.setRowTypes(results.flatMap { exercise in
-////                
-//////                let unarchivedDictionary = NSKeyedUnarchiver.unarchiveObject(with:exercise as! Data) as! NSDictionary
-//////                
-////                let exercise = Exercise(context: Datamodel.sharedInstance.container.viewContext)
-////                exercise.informedFromDictionary(unarchivedDictionary)
-////                
-////                return exercise.name
-////
-////            })
-////                return Exercise(dictionary:unarchivedDictionary )
-//                
-//            }, errorHandler: { (error) -> Void in
-//                // 6
-//                print(error)
-//        })
-    
     }
 
     
     func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {
+        
         print("error: ", error)
     }
     
     func session(_ session: WCSession, didReceive file: WCSessionFile) {
-        print("error: ", file)
-//        do {
-//        try? _ = Datamodel.sharedInstance.container.persistentStoreCoordinator.addPersistentStore(ofType: NSBinaryStoreType, configurationName: nil, at: file.fileURL, options: nil)
-//        }
-//        
-//        Datamodel.sharedInstance.container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-//            if let error = error {
-//                fatalError("Unresolved error \(error)")
+
+        do {
+        var x = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: PersistentContainer.sharedAppGroup)
+            x = x!.appendingPathComponent("numodel.sqlite")
+            do {
+                try FileManager.default.removeItem(at: x!)
+            } catch {
+                print(error)
+            }
+         //try   FileManager.default.createDirectory(at: x!, withIntermediateDirectories: false, attributes: nil)
+            //if FileManager.default.fileExists(atPath: x!.absoluteString) {
+            
+//             let fileURL = try FileManager.default.replaceItemAt(x!.absoluteURL, withItemAt: file.fileURL.absoluteURL)
+//            } else {
+                try FileManager.default.moveItem(at: file.fileURL, to:x!)
 //            }
-//            print("test")
-//            
-//            
-//        })
+        print("error: ", file)
         
-        let dm = WatchDataModel()
-        dm.setupContainer(with: file.fileURL.absoluteURL, completionHandler: { (test, error) in
-                self.exercises = WatchDataModel.allExercises(dm.container!)
+        let dm = WatchDataModel.sharedInstance
+        dm.setupContainer(with: x!, completionHandler: { (test, error) in
+            print("TEST \(test.url)")
+            self.exercises = WatchDataModel.allExercises(dm.container!)
             
             
             }
         )
-        
-       
-       
-        
-        
-        
+//        } catch {
+//            print("\(error)")
+//        }
+        } catch {
+            print(error)
+        }
     }
     /** Called on the delegate of the receiver. Will be called on startup if the incoming message caused the receiver to launch. */
 //    @available(watchOS 2.0, *)
@@ -142,6 +124,13 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
 //        //self.tableView.r
 //    
 //    }
+    
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
+        let exercise = WatchDataModel.allExercises(WatchDataModel.sharedInstance.container!)[rowIndex]
+        //get exercise
+        //pass it through
+        self.pushController(withName: "AddSession", context: exercise)
+    }
 
 }
 

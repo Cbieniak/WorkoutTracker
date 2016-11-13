@@ -18,19 +18,21 @@ public class WatchDataModel {
         return Static.instance
     }
     
-    let binaryUrl: URL = PersistentContainer.defaultDirectoryURL().appendingPathComponent("binary")
+    let binaryUrl: URL = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("binary")
     
-    var container: PersistentContainer?
+    var container: NSPersistentContainer?
     
     func setupContainer(with path: URL, completionHandler: @escaping ((NSPersistentStoreDescription, Error?) -> Void)) {
-        self.container = PersistentContainer(name: "Datamodel")
+        self.container = NSPersistentContainer(name: "Datamodel")
         do {
+           //try self.container!.persistentStoreCoordinator.
             try self.container!.persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: path, options: nil)
+            self.container!.loadPersistentStores(completionHandler: completionHandler)
         } catch {
             print("error")
         }
         
-        self.container!.loadPersistentStores(completionHandler: completionHandler)
+        
         
     }
     

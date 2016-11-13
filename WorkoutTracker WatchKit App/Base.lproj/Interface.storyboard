@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11077"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -30,6 +33,36 @@
                     </connections>
                 </controller>
             </objects>
+        </scene>
+        <!--AddSession-->
+        <scene sceneID="UTY-JH-p2F">
+            <objects>
+                <controller identifier="AddSession" id="hFw-yO-vsK" customClass="AddSessionInterfaceController" customModule="WorkoutTracker_WatchKit_Extension">
+                    <items>
+                        <label width="1" alignment="left" text="Label" id="iTm-Tp-sdp">
+                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                        </label>
+                        <button width="1" alignment="center" title="Button" id="W6h-CP-Lts">
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <fontDescription key="font" type="system" pointSize="30"/>
+                            <connections>
+                                <action selector="valueButtonTouchedUpInside" destination="hFw-yO-vsK" id="RAN-u3-Baw"/>
+                            </connections>
+                        </button>
+                        <picker height="100" alignment="left" focusStyle="stack" id="3l1-Cs-pP7">
+                            <connections>
+                                <action selector="pickerAction:" destination="hFw-yO-vsK" id="MK5-Sq-LJM"/>
+                            </connections>
+                        </picker>
+                    </items>
+                    <connections>
+                        <outlet property="picker" destination="3l1-Cs-pP7" id="laM-br-FiZ"/>
+                        <outlet property="titleLabel" destination="iTm-Tp-sdp" id="DZY-Hb-9ni"/>
+                        <outlet property="valueButton" destination="W6h-CP-Lts" id="bvJ-CF-AgM"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="285" y="65"/>
         </scene>
     </scenes>
 </document>

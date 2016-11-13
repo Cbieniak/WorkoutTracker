@@ -16,7 +16,7 @@ class SessionListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        context = Datamodel().container.viewContext
+        context = Datamodel.sharedInstance.container.viewContext
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
