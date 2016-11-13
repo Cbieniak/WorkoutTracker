@@ -8,6 +8,8 @@
 
 import UIKit
 import WatchKit
+import WatchConnectivity
+
 
 class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
     
@@ -36,7 +38,7 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
             session.speed = lastSession.speed
             session.distance = lastSession.distance
             session.exercise = exercise
-            exercise.sessions.adding(session)
+            exercise.sessions = exercise.sessions.adding(session) as NSSet
         }
         
         crownSequencer.delegate = self
@@ -67,13 +69,7 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
     
     override func willDisappear() {
         super.willDisappear()
-        //save session.
-        //record it in the changelog.
-        do {
-            try WatchDataModel.sharedInstance.container?.viewContext.save()
-        } catch {
-            print(error)
-        }
+        
         
     }
     
@@ -121,4 +117,28 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
 
     }
 
+    @IBAction func saveTouchedUpInside() {
+        //save session.
+        //record it in the changelog.
+        do {
+            try WatchDataModel.sharedInstance.container?.viewContext.save()
+        } catch {
+            print(error)
+        }
+        
+        var sessionDict:[NSString: Any] = [:]
+        
+        for attr in Session.attributes {
+            guard self.session.value(forKey: attr) as! Double > 0 else { break }
+            sessionDict.updateValue(NSNumber(value: (self.session.value(forKey: attr) as! Double)), forKey: attr as NSString)
+        } 
+        sessionDict.updateValue(NSNumber(value:session.date!.timeIntervalSince1970), forKey: "date")
+        sessionDict.updateValue(session.exercise!.name!, forKey: "exerciseName")
+        
+        WCSession.default().sendMessage(["session": sessionDict], replyHandler: nil, errorHandler: { (error) -> Void in
+            print(error)
+        })
+        
+        self.pop()
+    }
 }

@@ -96,40 +96,34 @@ extension AppDelegate: WCSessionDelegate {
     
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         
-        //create a new url migrate it
-        
-//        var x = FileManager.default.containerURL(
-//                        forSecurityApplicationGroupIdentifier: PersistentContainer.sharedAppGroup)
-//                        x = x!.appendingPathComponent("dbackup.sqlite")
-//        var newURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-//        newURL = newURL.appendingPathComponent("dbackup.sqlite")
-//       // do {
-//       
-//        if let nuStore = Datamodel().container.persistentStoreCoordinator.persistentStores.first {
-//            //https://developer.apple.com/library/content/qa/qa1809/_index.html
-//            nuStore
-//           try! Datamodel().container.persistentStoreCoordinator.migratePersistentStore(nuStore, to: newURL, options: nil, withType: NSSQLiteStoreType)
-//        }
+        if message.keys.contains("session") {
+            
+            let session = Session(context: Datamodel.sharedInstance.container.viewContext)
+            
+            for (key,val) in (message["session"] as! [NSString : Any]) {
+                if (key == "exerciseName") {	
+                    let exercise: Exercise = Datamodel.allExercises().first(where: { $0.name == (val as! String)})!
+                    session.exercise = exercise
+                    exercise.sessions = exercise.sessions.adding(session) as NSSet
+          
+                } else if key == "date" {
+                    session.setValue(Date.init(timeIntervalSince1970: (val as! NSNumber).doubleValue), forKey: "date")
+                } else if val is NSNumber {
+                    session.setValue((val as! NSNumber).doubleValue, forKey: key as String)
+                }
+                
+            }
+            do {
+                try Datamodel.sharedInstance.container.viewContext.save()
+            } catch {
+                print(error)
+            }
+        }
         
         if let url = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first?.url {
             
-//            do {
-//                let filePath: String = newURL.absoluteString
-//                var fileSize : UInt64
-//                let attr:NSDictionary? = try FileManager.default.attributesOfItem(atPath: filePath) as NSDictionary?
-//                if let _attr = attr {
-//                    fileSize = _attr.fileSize();
-//                    print(fileSize)
-//                }
-//                
-//            } catch {
-//                print(error)
-//            }
             session.transferFile(url, metadata: nil)
         }
-//        } catch {
-//            print(error)
-//        }
     }
     
 }

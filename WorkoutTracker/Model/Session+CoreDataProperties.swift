@@ -23,5 +23,7 @@ extension Session {
     @NSManaged public var weight: Double
     @NSManaged public var speed: Double
     @NSManaged public var exercise: Exercise?
+    
+    static let attributes: [String] = ["reps", "distance", "weight", "speed"]
 
 }

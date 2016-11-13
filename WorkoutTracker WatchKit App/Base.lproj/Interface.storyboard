@@ -55,6 +55,15 @@
                             </connections>
                         </picker>
                     </items>
+                    <menu key="menu" id="Hso-gH-ZAu">
+                        <items>
+                            <menuItem title="Menu Item" icon="add" id="SBe-Zv-HF0" userLabel="Save">
+                                <connections>
+                                    <action selector="saveTouchedUpInside" destination="hFw-yO-vsK" id="8lx-o5-0Ls"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                     <connections>
                         <outlet property="picker" destination="3l1-Cs-pP7" id="laM-br-FiZ"/>
                         <outlet property="titleLabel" destination="iTm-Tp-sdp" id="DZY-Hb-9ni"/>
@@ -62,7 +71,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="285" y="65"/>
+            <point key="canvasLocation" x="285" y="86"/>
         </scene>
     </scenes>
 </document>

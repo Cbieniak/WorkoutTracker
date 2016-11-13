@@ -11,8 +11,6 @@ import Foundation
 import CoreData
 import WatchConnectivity
 
-
-
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     var session: WCSession? {
@@ -80,7 +78,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {
         
-        print("error: ", error)
+        print("error: \(error)")
     }
     
     func session(_ session: WCSession, didReceive file: WCSessionFile) {
