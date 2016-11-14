@@ -34,6 +34,7 @@ class ExerciseDetailViewController: UIViewController {
         context = Datamodel.sharedInstance.container.viewContext
         if (exercise == nil) {
             exercise = Exercise(context: context)
+            exercise.primaryKey = UUID().uuidString
             exercise.sessions = NSSet()
             exercise.trackedAttributes = NSArray()
         } else {
@@ -83,8 +84,6 @@ class ExerciseDetailViewController: UIViewController {
         } catch {
             print("error\(error)")
         }
-        
-        //_ = self.navigationController?.popViewController(animated: true)
         
     }
     

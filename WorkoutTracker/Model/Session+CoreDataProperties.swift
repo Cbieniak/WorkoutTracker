@@ -15,7 +15,7 @@ extension Session {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Session> {
         return NSFetchRequest<Session>(entityName: "Session");
     }
-
+    
     @NSManaged public var date: NSDate?
     @NSManaged public var reps: Double
     @NSManaged public var time: Double
@@ -24,6 +24,6 @@ extension Session {
     @NSManaged public var speed: Double
     @NSManaged public var exercise: Exercise?
     
-    static let attributes: [String] = ["reps", "distance", "weight", "speed"]
+    static let attributes: [String] = ["reps", "distance", "weight", "time", "speed"]
 
 }

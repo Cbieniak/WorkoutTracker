@@ -97,24 +97,20 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
     @IBAction func pickerAction(_ value: Int) {
         self.currentlyTrackedAttribute = exercise.trackedAttributes[value] as? String
         self.valueButton.setTitle("\(session.value(forKey: self.currentlyTrackedAttribute!)!)")
-        
     }
     
     override func pickerDidFocus(_ picker: WKInterfacePicker) {
         super.pickerDidFocus(picker)
-        print("test")
     }
     
     override func pickerDidResignFocus(_ picker: WKInterfacePicker) {
         super.pickerDidResignFocus(picker)
         crownSequencer.focus()
-        print("resigned")
     }
 
 
     @IBAction func valueButtonTouchedUpInside() {
         self.picker.resignFocus()
-
     }
 
     @IBAction func saveTouchedUpInside() {
@@ -129,11 +125,13 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
         var sessionDict:[NSString: Any] = [:]
         
         for attr in Session.attributes {
-            guard self.session.value(forKey: attr) as! Double > 0 else { break }
-            sessionDict.updateValue(NSNumber(value: (self.session.value(forKey: attr) as! Double)), forKey: attr as NSString)
-        } 
+            if self.session.value(forKey: attr) as! Double > 0 {
+                
+                sessionDict.updateValue(NSNumber(value: (self.session.value(forKey: attr) as! Double)), forKey: attr as NSString)
+            }
+        }
         sessionDict.updateValue(NSNumber(value:session.date!.timeIntervalSince1970), forKey: "date")
-        sessionDict.updateValue(session.exercise!.name!, forKey: "exerciseName")
+        sessionDict.updateValue(session.exercise!.primaryKey!, forKey: "exercisePK")
         
         WCSession.default().sendMessage(["session": sessionDict], replyHandler: nil, errorHandler: { (error) -> Void in
             print(error)

@@ -21,29 +21,6 @@ public class Datamodel {
     
     let binaryUrl: URL = PersistentContainer.defaultDirectoryURL().appendingPathComponent("binary")
     
-//    lazy var binaryContainer: NSPersistentContainer = {
-//        let container = PersistentContainer(name: "Datamodel")
-////        do {
-////            
-//////            try _ = container.persistentStoreCoordinator.addPersistentStore(ofType: NSBinaryStoreType, configurationName: nil, at: self.binaryUrl, options: nil)
-////            
-////        } catch {
-////            print("\(error)")
-////        }
-//        
-////        
-//        
-//        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-//            if let error = error {
-//                fatalError("Unresolved error \(error)")
-//            }
-//        })
-//        
-//        return container
-//        
-//    }()
-    
-    
     lazy var container: PersistentContainer = {
         let container = PersistentContainer(name: "Datamodel")
     
@@ -62,7 +39,6 @@ public class Datamodel {
         
         var results: [Exercise]
         do {
-            
             try results = nuContext.fetch(Exercise.fetchRequest())
             
             return results

@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Exercise" representedClassName=".Exercise" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primaryKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackedAttributes" optional="YES" attributeType="Transformable" syncable="YES"/>
         <relationship name="sessions" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="exercise" inverseEntity="Session" syncable="YES"/>
     </entity>
@@ -15,7 +16,7 @@
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sessions" inverseEntity="Exercise" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Exercise" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Exercise" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Session" positionX="-63" positionY="18" width="128" height="150"/>
     </elements>
 </model>

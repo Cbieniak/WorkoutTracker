@@ -27,8 +27,14 @@
                                 </tableRow>
                             </items>
                         </table>
+                        <button width="1" alignment="left" title="Sync" id="4zg-kU-gcu">
+                            <connections>
+                                <action selector="syncTouchedUpInside" destination="AgC-eL-Hgc" id="qDM-oB-hja"/>
+                            </connections>
+                        </button>
                     </items>
                     <connections>
+                        <outlet property="syncButton" destination="4zg-kU-gcu" id="LS6-Y7-x6s"/>
                         <outlet property="tableView" destination="tIk-Dx-Bn7" id="oyl-dD-J5b"/>
                     </connections>
                 </controller>
@@ -57,7 +63,7 @@
                     </items>
                     <menu key="menu" id="Hso-gH-ZAu">
                         <items>
-                            <menuItem title="Menu Item" icon="add" id="SBe-Zv-HF0" userLabel="Save">
+                            <menuItem title="Save" icon="accept" id="SBe-Zv-HF0" userLabel="Save">
                                 <connections>
                                     <action selector="saveTouchedUpInside" destination="hFw-yO-vsK" id="8lx-o5-0Ls"/>
                                 </connections>

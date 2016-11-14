@@ -35,13 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let j = Datamodel.allExercises(Datamodel.sharedInstance.binaryContainer)
         
 //        session?.transferFile(Datamodel.sharedInstance.binaryUrl, metadata: nil)
-        var newURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        newURL = newURL.appendingPathComponent("dbackup.sqlite")
-
-        if let nuStore = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first {
-            //https://developer.apple.com/library/content/qa/qa1809/_index.html
-            try! Datamodel.sharedInstance.container.persistentStoreCoordinator.migratePersistentStore(nuStore, to: newURL, options: nil, withType: NSSQLiteStoreType)
-        }
+        
         
         return true
     }
@@ -86,13 +80,7 @@ extension AppDelegate: WCSessionDelegate {
     /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
     @available(iOS 9.3, *)
     public func sessionDidDeactivate(_ session: WCSession){}
-    
-//    public func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Swift.Void) {
-//        
-//        print("getting it done")
-//        replyHandler(["exercises": Datamodel.allExercises().flatMap {$0.toData()}])
-//    }
-    
+
     
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         
@@ -101,11 +89,10 @@ extension AppDelegate: WCSessionDelegate {
             let session = Session(context: Datamodel.sharedInstance.container.viewContext)
             
             for (key,val) in (message["session"] as! [NSString : Any]) {
-                if (key == "exerciseName") {	
-                    let exercise: Exercise = Datamodel.allExercises().first(where: { $0.name == (val as! String)})!
+                if (key == "exercisePK") {
+                    let exercise: Exercise = Datamodel.allExercises().first(where: { $0.primaryKey == (val as! String)})!
                     session.exercise = exercise
                     exercise.sessions = exercise.sessions.adding(session) as NSSet
-          
                 } else if key == "date" {
                     session.setValue(Date.init(timeIntervalSince1970: (val as! NSNumber).doubleValue), forKey: "date")
                 } else if val is NSNumber {
@@ -113,16 +100,34 @@ extension AppDelegate: WCSessionDelegate {
                 }
                 
             }
-            do {
-                try Datamodel.sharedInstance.container.viewContext.save()
-            } catch {
-                print(error)
-            }
+
+        }
+        
+        do {
+            try Datamodel.sharedInstance.container.viewContext.save()
+        } catch {
+            print(error)
         }
         
         if let url = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first?.url {
             
-            session.transferFile(url, metadata: nil)
+            var newURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            newURL = newURL.appendingPathComponent("dbackup.sqlite")
+            
+            do {
+                try FileManager.default.removeItem(at: newURL)
+            } catch {
+                print(error)
+            }
+            
+            if let nuStore = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first {
+                //https://developer.apple.com/library/content/qa/qa1809/_index.html
+                let persistentStore = try! Datamodel.sharedInstance.container.persistentStoreCoordinator.migratePersistentStore(nuStore, to: newURL, options: nil, withType: NSSQLiteStoreType)
+                try! Datamodel.sharedInstance.container.persistentStoreCoordinator.remove(persistentStore)
+                session.transferFile(newURL, metadata: nil)
+                try! Datamodel.sharedInstance.container.persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+            }
+            
         }
     }
     
