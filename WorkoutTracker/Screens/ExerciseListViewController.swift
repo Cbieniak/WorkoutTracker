@@ -21,7 +21,6 @@ class ExerciseListViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.register(UINib.init(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ExerciseCollectionViewCell")
-        self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewExercise))
@@ -54,7 +53,7 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExerciseCollectionViewCell", for: indexPath) as! ExerciseCollectionViewCell
         
-        cell.backgroundColor = .red
+        
         
         cell.titleLabel.text = Datamodel.allExercises()[indexPath.row].name
         

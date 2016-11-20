@@ -77,7 +77,7 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
         
         var value: Double = session.value(forKey: currentlyTrackedAttribute!) as! Double
         
-        value = value + (rotationalDelta > 0 ? 1 : -1)
+        value = value + (rotationalDelta > 0 ? 0.5 : -0.5)
         
         session.setValue(value, forKey: currentlyTrackedAttribute!)
         

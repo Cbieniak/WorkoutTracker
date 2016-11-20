@@ -20,7 +20,6 @@ class ExerciseDetailViewController: UIViewController {
     @IBOutlet weak var distanceTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var repsTextField: UITextField!
-    @IBOutlet weak var trackNameButton: UIButton!
     @IBOutlet weak var trackTimeButton: UIButton!
     @IBOutlet weak var trackDistanceButton: UIButton!
     @IBOutlet weak var trackWeightButton: UIButton!
@@ -48,7 +47,6 @@ class ExerciseDetailViewController: UIViewController {
         
         //map
         dictionary = [:]
-        dictionary[trackNameButton] = "name"
         dictionary[trackTimeButton] = "time"
         dictionary[trackWeightButton] = "weight"
         dictionary[trackRepsButton] = "reps"
@@ -88,13 +86,17 @@ class ExerciseDetailViewController: UIViewController {
     }
     
     @IBAction func buttonTouchedUpInside(_ sender: UIButton) {
-        sender.setTitle("tracked", for: .normal)
+        
         let mutableArray: NSMutableArray = self.exercise.trackedAttributes.mutableCopy() as! NSMutableArray
-        mutableArray.add(dictionary[sender] ?? "name")
-
+        if self.exercise.trackedAttributes.contains(dictionary[sender]!) {
+            sender.setTitle("Track", for: .normal)
+            mutableArray.remove(dictionary[sender]!)
+        } else {
+            sender.setTitle("Tracked", for: .normal)
+            mutableArray.add(dictionary[sender]!)
+        }
         self.exercise.trackedAttributes = mutableArray
     }
-
 }
 
 extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -106,7 +108,7 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
         let session = self.exercise.sessions.allObjects[indexPath.row] as! Session
-        cell.textLabel?.text =  self.exercise.trackedAttributes.reduce("", { $0! + " " + String(describing: (session.value(forKey: $1 as! String))!)})
+        cell.textLabel?.text =  self.exercise.trackedAttributes.reduce("", { $0! + " " + String(describing: (session.value(forKey: $1 as! String))!) + " " + Session.trackedAttributeSuffix(attr: $1 as! String) })
         return cell
     }
 }

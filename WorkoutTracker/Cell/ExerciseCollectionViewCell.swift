@@ -13,7 +13,28 @@ class ExerciseCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.backgroundColor = .white
+        
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.black.cgColor
+        
+        self.titleLabel.textColor = .black
+        
+        self.layer.cornerRadius = 10.0
+        
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                self.backgroundColor = .black
+                self.titleLabel.textColor = .white
+            } else {
+                self.backgroundColor = .white
+                self.titleLabel.textColor = .black
+            }
+        }
     }
 
 }
