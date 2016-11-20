@@ -33,18 +33,32 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <containerView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6f-hx-dE6">
+                                <rect key="frame" x="20" y="159" width="335" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="4KJ-QS-zYZ"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="cuc-Ao-ziM" kind="embed" identifier="childVC" id="Nl5-ws-Kvf"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Y6f-hx-dE6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="4os-O3-0Uc"/>
                             <constraint firstItem="Xgt-fP-Zgq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="D88-OB-MvI"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xgt-fP-Zgq" secondAttribute="bottom" id="F6y-h4-NwG"/>
+                            <constraint firstAttribute="trailing" secondItem="Y6f-hx-dE6" secondAttribute="trailing" constant="20" id="M6y-ZI-Kh1"/>
                             <constraint firstItem="Xgt-fP-Zgq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="OJh-4d-yTC"/>
+                            <constraint firstItem="Y6f-hx-dE6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="W2j-EB-BzI"/>
+                            <constraint firstItem="Y6f-hx-dE6" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tAa-CD-G4m"/>
                             <constraint firstAttribute="trailing" secondItem="Xgt-fP-Zgq" secondAttribute="trailing" id="xlX-K9-3I4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eY6-Rw-pHN"/>
                     <connections>
                         <outlet property="collectionView" destination="Xgt-fP-Zgq" id="B54-Ep-VxY"/>
+                        <outlet property="containerView" destination="Y6f-hx-dE6" id="LPz-gy-tsR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -205,6 +219,111 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="287-ha-VsZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1916" y="-30.134932533733135"/>
+        </scene>
+        <!--Create Exercise View Controller-->
+        <scene sceneID="7Ed-df-qb7">
+            <objects>
+                <viewController id="cuc-Ao-ziM" customClass="CreateExerciseViewController" customModule="WorkoutTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fAd-Ie-acC"/>
+                        <viewControllerLayoutGuide type="bottom" id="lYe-Du-llE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iVo-F8-MvS">
+                        <rect key="frame" x="0.0" y="0.0" width="335" height="350"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m0m-1t-jZc">
+                                <rect key="frame" x="26" y="10" width="283" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="AS0-33-vQh"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Z1K-BN-g34">
+                                <rect key="frame" x="26" y="58" width="283" height="190"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkH-m1-m6V">
+                                        <rect key="frame" x="0.0" y="0.0" width="283" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="06P-Ox-ABr"/>
+                                        </constraints>
+                                        <state key="normal" title="Reps"/>
+                                        <connections>
+                                            <action selector="repsButtonTouchedUpInside:" destination="cuc-Ao-ziM" eventType="touchUpInside" id="caD-v9-LJz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WPz-z1-E4R">
+                                        <rect key="frame" x="0.0" y="50" width="283" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="NUR-96-tdf"/>
+                                        </constraints>
+                                        <state key="normal" title="Weight"/>
+                                        <connections>
+                                            <action selector="weightButtonTouchedUpInside:" destination="cuc-Ao-ziM" eventType="touchUpInside" id="e6t-da-bgD"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHP-u9-jRA">
+                                        <rect key="frame" x="0.0" y="100" width="283" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Wcz-fz-2CY"/>
+                                        </constraints>
+                                        <state key="normal" title="Distance"/>
+                                        <connections>
+                                            <action selector="distanceButtonTouchedUpInside:" destination="cuc-Ao-ziM" eventType="touchUpInside" id="9Of-oz-K4G"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTk-j4-J5h">
+                                        <rect key="frame" x="0.0" y="150" width="283" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="IXU-qF-a06"/>
+                                        </constraints>
+                                        <state key="normal" title="Time"/>
+                                        <connections>
+                                            <action selector="timeButtonTouchedUpInside:" destination="cuc-Ao-ziM" eventType="touchUpInside" id="3zt-my-oz9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="190" id="bI6-T7-dLk"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cly-hW-cYk">
+                                <rect key="frame" x="26" y="256" width="283" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="uCf-9i-jhM"/>
+                                </constraints>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButtonTouchedUpInside:" destination="cuc-Ao-ziM" eventType="touchUpInside" id="vYk-7Z-xIL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cly-hW-cYk" secondAttribute="trailing" constant="10" id="9bM-hQ-o1f"/>
+                            <constraint firstItem="m0m-1t-jZc" firstAttribute="top" secondItem="iVo-F8-MvS" secondAttribute="topMargin" constant="10" id="DMu-8t-zYi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Z1K-BN-g34" secondAttribute="trailing" constant="10" id="OCe-jX-819"/>
+                            <constraint firstItem="m0m-1t-jZc" firstAttribute="leading" secondItem="iVo-F8-MvS" secondAttribute="leadingMargin" constant="10" id="Wdy-2a-ITp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="m0m-1t-jZc" secondAttribute="trailing" constant="10" id="cza-00-rra"/>
+                            <constraint firstItem="Cly-hW-cYk" firstAttribute="top" secondItem="Z1K-BN-g34" secondAttribute="bottom" constant="8" id="gkF-O6-uk6"/>
+                            <constraint firstItem="Z1K-BN-g34" firstAttribute="leading" secondItem="iVo-F8-MvS" secondAttribute="leadingMargin" constant="10" id="vPm-Lg-Ylf"/>
+                            <constraint firstItem="Cly-hW-cYk" firstAttribute="leading" secondItem="iVo-F8-MvS" secondAttribute="leadingMargin" constant="10" id="xRV-oc-1r0"/>
+                            <constraint firstItem="Z1K-BN-g34" firstAttribute="top" secondItem="m0m-1t-jZc" secondAttribute="bottom" constant="8" id="zd1-MG-a1j"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="distanceButton" destination="ZHP-u9-jRA" id="6dY-gN-T46"/>
+                        <outlet property="nameTextField" destination="m0m-1t-jZc" id="B2X-QB-iGh"/>
+                        <outlet property="repsButton" destination="bkH-m1-m6V" id="QoF-zi-aMi"/>
+                        <outlet property="timeButton" destination="gTk-j4-J5h" id="cgC-gx-3bk"/>
+                        <outlet property="weightButton" destination="WPz-z1-E4R" id="Goq-Ab-EEH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G40-7a-j50" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1228" y="-684"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Goc-p1-h9J">

@@ -12,7 +12,8 @@ import CoreData
 class ExerciseListViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var containerView: UIView!
+    var createExerciseViewController: CreateExerciseViewController!
     var context: NSManagedObjectContext!
     
     override func viewDidLoad() {
@@ -33,9 +34,24 @@ class ExerciseListViewController: UIViewController {
     }
     
     func addNewExercise() {
-        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+//        let sb = UIStoryboard.init(name: "Main", bundle: nil)
+//        
+//        self.navigationController?.pushViewController(sb.instantiateViewController(withIdentifier: "ExerciseDetailViewController"), animated: true)
+    
+        UIView.animate(withDuration: 0.3) { self.containerView.alpha = 1.0 }
+        createExerciseViewController.exerciseAdded = {
+            print($0)
+            self.collectionView.reloadData()
+            UIView.animate(withDuration: 0.3) { self.containerView.alpha = 0.0 }
+        }
         
-        self.navigationController?.pushViewController(sb.instantiateViewController(withIdentifier: "ExerciseDetailViewController"), animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        if segue.identifier == "childVC" {
+            createExerciseViewController = segue.destination as! CreateExerciseViewController
+        }
     }
 
 }

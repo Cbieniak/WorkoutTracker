@@ -11,6 +11,7 @@
 		2675ED31A1CC56F8B1498453 /* Pods_WorkoutTracker_WatchKit_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE640C18049E1C97C8D34E0 /* Pods_WorkoutTracker_WatchKit_Extension.framework */; };
 		30389FC57FF9BAA9E0375221 /* Pods_WorkoutTracker_WatchKit_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3BF11F383883912087F08F /* Pods_WorkoutTracker_WatchKit_App.framework */; };
 		9937277D3240385F1BACEBF8 /* Pods_WorkoutTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D168094D52FC0D3666F929C6 /* Pods_WorkoutTrackerTests.framework */; };
+		AA57DCC31DE196E5003A1842 /* CreateExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA57DCC21DE196E5003A1842 /* CreateExerciseViewController.swift */; };
 		C6196D8A1DBF74BA00AFDFEB /* SessionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6196D891DBF74BA00AFDFEB /* SessionListViewController.swift */; };
 		C6196D901DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6196D8E1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift */; };
 		C6196D911DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6196D8F1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib */; };
@@ -42,7 +43,6 @@
 		C6F74BF11DB3690D00871BA7 /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BEC1DB3690D00871BA7 /* Exercise+CoreDataProperties.swift */; };
 		C6F74BF21DB3690D00871BA7 /* Exercise+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BEC1DB3690D00871BA7 /* Exercise+CoreDataProperties.swift */; };
 		C6F74BF41DB36A0200871BA7 /* ExerciseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BF31DB36A0200871BA7 /* ExerciseListViewController.swift */; };
-		C6F74BF51DB36A0200871BA7 /* ExerciseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BF31DB36A0200871BA7 /* ExerciseListViewController.swift */; };
 		C6F74C161DB637FC00871BA7 /* Datamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74C151DB637FB00871BA7 /* Datamodel.swift */; };
 		C6F74C171DB6394B00871BA7 /* Datamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74C151DB637FB00871BA7 /* Datamodel.swift */; };
 		C6F74C181DB63CC400871BA7 /* Datamodel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C6F74BE01DB366F100871BA7 /* Datamodel.xcdatamodeld */; };
@@ -108,6 +108,7 @@
 		68EA7EEA9002C91048703343 /* Pods-WorkoutTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkoutTrackerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WorkoutTrackerTests/Pods-WorkoutTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		7464659187E919142A4EBFEF /* Pods_WorkoutTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkoutTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97F81E929F59226BB6AE624B /* Pods-WorkoutTracker WatchKit Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkoutTracker WatchKit Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WorkoutTracker WatchKit Extension/Pods-WorkoutTracker WatchKit Extension.debug.xcconfig"; sourceTree = "<group>"; };
+		AA57DCC21DE196E5003A1842 /* CreateExerciseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateExerciseViewController.swift; sourceTree = "<group>"; };
 		AB3BF11F383883912087F08F /* Pods_WorkoutTracker_WatchKit_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkoutTracker_WatchKit_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6196D891DBF74BA00AFDFEB /* SessionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionListViewController.swift; sourceTree = "<group>"; };
 		C6196D8E1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -304,6 +305,7 @@
 				C6F74BD81DB364EF00871BA7 /* ExerciseDetailViewController.swift */,
 				C6F74BF31DB36A0200871BA7 /* ExerciseListViewController.swift */,
 				C6196D891DBF74BA00AFDFEB /* SessionListViewController.swift */,
+				AA57DCC21DE196E5003A1842 /* CreateExerciseViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -690,6 +692,7 @@
 			files = (
 				C6F74BF41DB36A0200871BA7 /* ExerciseListViewController.swift in Sources */,
 				C62EFF3F1DB97D3600125BDB /* WatchDatamodel.swift in Sources */,
+				AA57DCC31DE196E5003A1842 /* CreateExerciseViewController.swift in Sources */,
 				C6BB0C711DBCDA0D006C2BA7 /* Session+CoreDataClass.swift in Sources */,
 				C6F74BDE1DB364EF00871BA7 /* ExerciseDetailViewController.swift in Sources */,
 				C6F74BE21DB366F100871BA7 /* Datamodel.xcdatamodeld in Sources */,
@@ -707,7 +710,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6F74BF51DB36A0200871BA7 /* ExerciseListViewController.swift in Sources */,
 				C6F74B9F1DB3643300871BA7 /* WorkoutTrackerTests.swift in Sources */,
 				C6F74BEE1DB3690D00871BA7 /* Exercise+CoreDataClass.swift in Sources */,
 				C6F74BF11DB3690D00871BA7 /* Exercise+CoreDataProperties.swift in Sources */,
