@@ -15,15 +15,9 @@ class ExerciseDetailViewController: UIViewController {
     
     var context: NSManagedObjectContext!
     
+    @IBOutlet weak var attributeTableView: UITableView!
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var timeTextField: UITextField!
-    @IBOutlet weak var distanceTextField: UITextField!
-    @IBOutlet weak var weightTextField: UITextField!
-    @IBOutlet weak var repsTextField: UITextField!
-    @IBOutlet weak var trackTimeButton: UIButton!
-    @IBOutlet weak var trackDistanceButton: UIButton!
-    @IBOutlet weak var trackWeightButton: UIButton!
-    @IBOutlet weak var trackRepsButton: UIButton!
+
     @IBOutlet weak var tableView: UITableView!
     
     var dictionary: [UIButton : String]!
@@ -42,17 +36,11 @@ class ExerciseDetailViewController: UIViewController {
         }
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.attributeTableView.dataSource = self
+        self.attributeTableView.delegate = self
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TEST")
         
-        //map
-        dictionary = [:]
-        dictionary[trackTimeButton] = "time"
-        dictionary[trackWeightButton] = "weight"
-        dictionary[trackRepsButton] = "reps"
-        dictionary[trackDistanceButton] = "distance"
-
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
     
@@ -62,20 +50,16 @@ class ExerciseDetailViewController: UIViewController {
         
         session.date = NSDate()
         
-        if let timeText = timeTextField.text, !timeText.isEmpty {
-            session.time = Double(timeText)!
-        }
-        if let distanceText = distanceTextField.text, !distanceText.isEmpty {
-            session.distance =  Double(distanceText)!
-        }
-        if let weightText = weightTextField.text, !weightText.isEmpty {
-            session.weight = Double(weightText)!
-        }
-        if let repsText = repsTextField.text, !repsText.isEmpty {
-            session.reps = Double(repsText)!
-        }
+        
         exercise.sessions.adding(session)
         session.exercise = exercise
+        for i in 0...self.exercise.trackedAttributes.count - 1 {
+            let attribute = self.exercise.trackedAttributes[i]
+            let val = self.attributeTableView.cellForRow(at: IndexPath(row: i, section: 0)) as! AttributeCell
+            
+            session.setValue(Double(val.textField.text!), forKey: attribute as! String)
+        }
+        
         do {
             try self.context.save()
             self.tableView.reloadData()
@@ -85,31 +69,42 @@ class ExerciseDetailViewController: UIViewController {
         
     }
     
-    @IBAction func buttonTouchedUpInside(_ sender: UIButton) {
-        
-        let mutableArray: NSMutableArray = self.exercise.trackedAttributes.mutableCopy() as! NSMutableArray
-        if self.exercise.trackedAttributes.contains(dictionary[sender]!) {
-            sender.setTitle("Track", for: .normal)
-            mutableArray.remove(dictionary[sender]!)
-        } else {
-            sender.setTitle("Tracked", for: .normal)
-            mutableArray.add(dictionary[sender]!)
-        }
-        self.exercise.trackedAttributes = mutableArray
-    }
 }
 
 extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.exercise.sessions.count
+        switch(tableView) {
+        case attributeTableView:
+            return self.exercise.trackedAttributes.count
+        default:
+            return self.exercise.sessions.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        switch(tableView) {
+            case attributeTableView:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath) as! AttributeCell
+            
+            cell.textField.placeholder = exercise.trackedAttributes[indexPath.row] as? String
+            return cell
+        default:
+            break
+            
+        }
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
         let session = self.exercise.sessions.allObjects[indexPath.row] as! Session
         cell.textLabel?.text =  self.exercise.trackedAttributes.reduce("", { $0! + " " + String(describing: (session.value(forKey: $1 as! String))!) + " " + Session.trackedAttributeSuffix(attr: $1 as! String) })
         return cell
     }
+}
+
+class AttributeCell: UITableViewCell {
+    
+    @IBOutlet weak var textField: UITextField!
 }
 
