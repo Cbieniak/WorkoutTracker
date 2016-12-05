@@ -14,7 +14,7 @@ enum updateStatus {
     case removed
 }
 
-class CreateExerciseViewController: UIViewController {
+class CreateExerciseViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var nameTextField: UITextField!
     
@@ -44,7 +44,18 @@ class CreateExerciseViewController: UIViewController {
         self.view.layer.borderColor = UIColor.black.cgColor
         
         buttonStyling()
+        nameTextField.delegate = self
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func reset() {
+        exercise = Exercise(context: context)
+        exercise.primaryKey = UUID().uuidString
+        exercise.sessions = NSSet()
+        exercise.trackedAttributes = NSArray()
+        buttonStyling()
+        self.nameTextField.text = ""
     }
     
     @IBAction func repsButtonTouchedUpInside(_ sender: UIButton) {
@@ -111,6 +122,13 @@ class CreateExerciseViewController: UIViewController {
             self.exercise.trackedAttributes = mutableArray
             return .added
         }
+    }
+    
+    //MARK: Delegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.nameTextField.resignFirstResponder()
+        return true
     }
 
 }

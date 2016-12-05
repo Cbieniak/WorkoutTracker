@@ -33,6 +33,10 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eEr-am-QtG">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <containerView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6f-hx-dE6">
                                 <rect key="frame" x="20" y="159" width="335" height="350"/>
                                 <constraints>
@@ -48,15 +52,20 @@
                             <constraint firstItem="Y6f-hx-dE6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="4os-O3-0Uc"/>
                             <constraint firstItem="Xgt-fP-Zgq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="D88-OB-MvI"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xgt-fP-Zgq" secondAttribute="bottom" id="F6y-h4-NwG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eEr-am-QtG" secondAttribute="bottom" id="KXB-gr-31v"/>
                             <constraint firstAttribute="trailing" secondItem="Y6f-hx-dE6" secondAttribute="trailing" constant="20" id="M6y-ZI-Kh1"/>
                             <constraint firstItem="Xgt-fP-Zgq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="OJh-4d-yTC"/>
                             <constraint firstItem="Y6f-hx-dE6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="W2j-EB-BzI"/>
+                            <constraint firstAttribute="trailing" secondItem="eEr-am-QtG" secondAttribute="trailing" id="YNs-FP-bWJ"/>
+                            <constraint firstItem="eEr-am-QtG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cD2-4B-TIA"/>
+                            <constraint firstItem="eEr-am-QtG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="cap-Tl-64u"/>
                             <constraint firstItem="Y6f-hx-dE6" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tAa-CD-G4m"/>
                             <constraint firstAttribute="trailing" secondItem="Xgt-fP-Zgq" secondAttribute="trailing" id="xlX-K9-3I4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eY6-Rw-pHN"/>
                     <connections>
+                        <outlet property="backgroundView" destination="eEr-am-QtG" id="9bb-kU-Nxb"/>
                         <outlet property="collectionView" destination="Xgt-fP-Zgq" id="B54-Ep-VxY"/>
                         <outlet property="containerView" destination="Y6f-hx-dE6" id="LPz-gy-tsR"/>
                     </connections>
@@ -87,7 +96,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eLs-97-F8S">
-                                <rect key="frame" x="26" y="303.5" width="323" height="60"/>
+                                <rect key="frame" x="26" y="304" width="323" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="1a1-EG-aTR"/>
                                 </constraints>
@@ -101,7 +110,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="r8d-lD-GSe">
-                                <rect key="frame" x="26" y="78" width="323" height="217.5"/>
+                                <rect key="frame" x="26" y="78" width="323" height="218"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttributeCell" id="jCu-rJ-Nsg" customClass="AttributeCell" customModule="WorkoutTracker" customModuleProvider="target">
@@ -180,7 +189,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Z1K-BN-g34">
                                 <rect key="frame" x="26" y="58" width="283" height="190"/>

@@ -39,7 +39,7 @@ public class Datamodel {
         
         var results: [Exercise]
         do {
-            try results = nuContext.fetch(Exercise.fetchRequest())
+            try results = nuContext.fetch(Exercise.fetchRequest()).filter { $0.name != nil }.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased()  })
             
             return results
         } catch {

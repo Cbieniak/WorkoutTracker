@@ -16,6 +16,11 @@ class ExerciseListViewController: UIViewController {
     var createExerciseViewController: CreateExerciseViewController!
     var context: NSManagedObjectContext!
     
+    var addBarButtonItem: UIBarButtonItem!
+    
+    var doneBarButtonItem: UIBarButtonItem!
+    
+    @IBOutlet weak var backgroundView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         context = Datamodel.sharedInstance.container.viewContext
@@ -23,8 +28,11 @@ class ExerciseListViewController: UIViewController {
         self.collectionView.dataSource = self
         self.collectionView.register(UINib.init(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ExerciseCollectionViewCell")
         
+        addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewExercise))
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewExercise))
+        doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(clearAddedExercise))
+        
+        self.navigationItem.rightBarButtonItem = addBarButtonItem
 
     }
     
@@ -33,17 +41,32 @@ class ExerciseListViewController: UIViewController {
         self.collectionView.reloadData()
     }
     
-    func addNewExercise() {
-//        let sb = UIStoryboard.init(name: "Main", bundle: nil)
-//        
-//        self.navigationController?.pushViewController(sb.instantiateViewController(withIdentifier: "ExerciseDetailViewController"), animated: true)
+    func clearAddedExercise() {
+        //todo clear unmade exercises
+        removeChildVC()
+    }
     
-        UIView.animate(withDuration: 0.3) { self.containerView.alpha = 1.0 }
-        createExerciseViewController.exerciseAdded = {
-            print($0)
-            self.collectionView.reloadData()
-            UIView.animate(withDuration: 0.3) { self.containerView.alpha = 0.0 }
+    func addNewExercise() {
+    
+        UIView.animate(withDuration: 0.3) {
+            self.containerView.alpha = 1.0
+            self.backgroundView.alpha = 1.0
+            self.navigationItem.rightBarButtonItem = self.doneBarButtonItem
         }
+        createExerciseViewController.exerciseAdded = { _ in
+            self.removeChildVC()
+        }
+        
+    }
+    
+    func removeChildVC() {
+        self.collectionView.reloadData()
+        self.navigationItem.rightBarButtonItem = self.addBarButtonItem
+        UIView.animate(withDuration: 0.3) {
+            self.containerView.alpha = 0.0
+            self.backgroundView.alpha = 0.0
+        }
+        createExerciseViewController.reset()
         
     }
     

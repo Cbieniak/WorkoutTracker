@@ -56,7 +56,6 @@ class ExerciseDetailViewController: UIViewController {
         for i in 0...self.exercise.trackedAttributes.count - 1 {
             let attribute = self.exercise.trackedAttributes[i]
             let val = self.attributeTableView.cellForRow(at: IndexPath(row: i, section: 0)) as! AttributeCell
-            
             session.setValue(Double(val.textField.text!), forKey: attribute as! String)
         }
         
@@ -86,19 +85,20 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
         
         switch(tableView) {
             case attributeTableView:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath) as! AttributeCell
-            
-            cell.textField.placeholder = exercise.trackedAttributes[indexPath.row] as? String
-            return cell
-        default:
-            break
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath) as! AttributeCell
+                
+                cell.textField.placeholder = exercise.trackedAttributes[indexPath.row] as? String
+                return cell
+            default:
+                break
             
         }
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
-        let session = self.exercise.sessions.allObjects[indexPath.row] as! Session
-        cell.textLabel?.text =  self.exercise.trackedAttributes.reduce("", { $0! + " " + String(describing: (session.value(forKey: $1 as! String))!) + " " + Session.trackedAttributeSuffix(attr: $1 as! String) })
+        let sessions = self.exercise.sessions.allObjects as! [Session]
+        let session = sessions.sorted(by: { $0.date!.compare($1.date! as Date) == .orderedDescending })[indexPath.row]
+        cell.textLabel?.text =  self.exercise.trackedAttributes.reduce("", { $0! + " " + String(describing: (session.value(forKey: $1 as! String)) ?? "") + " " + Session.trackedAttributeSuffix(attr: $1 as! String) })
         return cell
     }
 }
