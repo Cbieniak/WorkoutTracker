@@ -18,6 +18,8 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var nameTextField: UITextField!
     
+    let orange =  UIColor(colorLiteralRed: 44.0/255.0, green: 62.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+    
     @IBOutlet weak var repsButton: UIButton!
     @IBOutlet weak var weightButton: UIButton!
     @IBOutlet weak var distanceButton: UIButton!
@@ -41,7 +43,11 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate{
         
         self.view.layer.cornerRadius = 10
         self.view.layer.borderWidth = 1
-        self.view.layer.borderColor = UIColor.black.cgColor
+        self.view.layer.borderColor = orange.cgColor
+        nameTextField.layer.cornerRadius = 10
+        nameTextField.layer.borderWidth = 1
+        nameTextField.textColor = orange
+        nameTextField.layer.borderColor = orange.cgColor
         
         buttonStyling()
         nameTextField.delegate = self
@@ -94,11 +100,12 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate{
     
     func toggleButtonStyle(button: UIButton, state: Bool) {
         if state {
-            button.backgroundColor = .black
+            button.backgroundColor = orange
             button.setTitleColor(.white, for: .normal)
         } else {
             button.backgroundColor = .clear
-            button.setTitleColor(.black, for: .normal)
+            
+            button.setTitleColor(orange, for: .normal)
         }
     }
     
@@ -106,7 +113,8 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate{
         for button in [repsButton, weightButton, distanceButton, timeButton] {
             button!.layer.cornerRadius = 10
             button!.layer.borderWidth = 1
-            button!.layer.borderColor = UIColor.black.cgColor
+            
+            button!.layer.borderColor = orange.cgColor
             toggleButtonStyle(button: button!, state: false)
         }
     }

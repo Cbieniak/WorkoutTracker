@@ -18,10 +18,12 @@ class ExerciseDetailViewController: UIViewController {
     @IBOutlet weak var attributeTableView: UITableView!
     @IBOutlet weak var nameTextField: UITextField!
 
-    @IBOutlet weak var tableView: UITableView!
+    var sessionVC: SessionListViewController!
     
     var dictionary: [UIButton : String]!
     
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         context = Datamodel.sharedInstance.container.viewContext
@@ -34,13 +36,29 @@ class ExerciseDetailViewController: UIViewController {
             exercise = context.object(with: exercise.objectID) as! Exercise
             self.nameTextField.text = exercise.name
         }
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
+
         self.attributeTableView.dataSource = self
         self.attributeTableView.delegate = self
         
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TEST")
-        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        if segue.identifier == "SessionList" {
+            if let vc = segue.destination as? SessionListViewController {
+                vc.exercise = self.exercise
+                sessionVC = vc
+                sessionVC.bestOrMostRecentTouched = {
+                    let currentConstant = self.containerViewHeightConstraint.constant
+                    self.containerViewHeightConstraint.constant = currentConstant == 100 ? 400 : 100
+                    
+                    UIView.animate(withDuration: 0.3) {
+                       self.view.layoutIfNeeded()
+                    }
+                    
+                }
+            }
+        }
     }
 
     
@@ -61,7 +79,8 @@ class ExerciseDetailViewController: UIViewController {
         
         do {
             try self.context.save()
-            self.tableView.reloadData()
+            self.attributeTableView.reloadData()
+            self.sessionVC.reload()
         } catch {
             print("error\(error)")
         }
@@ -86,7 +105,7 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
         switch(tableView) {
             case attributeTableView:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath) as! AttributeCell
-                
+                cell.textField.text = nil
                 cell.textField.placeholder = exercise.trackedAttributes[indexPath.row] as? String
                 return cell
             default:
@@ -97,8 +116,20 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TEST", for: indexPath)
         let sessions = self.exercise.sessions.allObjects as! [Session]
+    
         let session = sessions.sorted(by: { $0.date!.compare($1.date! as Date) == .orderedDescending })[indexPath.row]
-        cell.textLabel?.text =  self.exercise.trackedAttributes.reduce("", { $0! + " " + String(describing: (session.value(forKey: $1 as! String)) ?? "") + " " + Session.trackedAttributeSuffix(attr: $1 as! String) })
+        
+        //DateFormatter
+        
+        let formatter = DateFormatter()
+        formatter.locale = NSLocale.current
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        
+        cell.backgroundColor = .clear
+        let dateStr = formatter.string(from: session.date as! Date)
+        let sessionInfo: String =  self.exercise.trackedAttributes.reduce("", { $0 + " " + String(describing: (session.value(forKey: $1 as! String)) ?? "") + " " + Session.trackedAttributeSuffix(attr: $1 as! String) })
+        cell.textLabel?.text = sessionInfo + " - " + dateStr
         return cell
     }
 }

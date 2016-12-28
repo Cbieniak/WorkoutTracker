@@ -21,6 +21,8 @@
 		C6BB0C721DBCDA0D006C2BA7 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C6F1DBCDA0D006C2BA7 /* Session+CoreDataClass.swift */; };
 		C6BB0C731DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C701DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift */; };
 		C6BB0C741DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C701DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift */; };
+		C6CC6F661E01609F00240ACE /* SessionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CC6F641E01609F00240ACE /* SessionCollectionViewCell.swift */; };
+		C6CC6F671E01609F00240ACE /* SessionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6CC6F651E01609F00240ACE /* SessionCollectionViewCell.xib */; };
 		C6EA2EE91DCF416000C2DCC3 /* AddSessionInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6EA2EE81DCF416000C2DCC3 /* AddSessionInterfaceController.swift */; };
 		C6EA2EEC1DCF443800C2DCC3 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6EA2EEA1DCF443800C2DCC3 /* Interface.storyboard */; };
 		C6F74B9F1DB3643300871BA7 /* WorkoutTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F74B9E1DB3643300871BA7 /* WorkoutTrackerTests.swift */; };
@@ -116,6 +118,8 @@
 		C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDatamodel.swift; sourceTree = "<group>"; };
 		C6BB0C6F1DBCDA0D006C2BA7 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C6BB0C701DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C6CC6F641E01609F00240ACE /* SessionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCollectionViewCell.swift; sourceTree = "<group>"; };
+		C6CC6F651E01609F00240ACE /* SessionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SessionCollectionViewCell.xib; sourceTree = "<group>"; };
 		C6EA2EE81DCF416000C2DCC3 /* AddSessionInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSessionInterfaceController.swift; sourceTree = "<group>"; };
 		C6EA2EEB1DCF443800C2DCC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		C6F74B861DB3643200871BA7 /* WorkoutTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +218,8 @@
 			children = (
 				C6196D8E1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift */,
 				C6196D8F1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib */,
+				C6CC6F641E01609F00240ACE /* SessionCollectionViewCell.swift */,
+				C6CC6F651E01609F00240ACE /* SessionCollectionViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -487,6 +493,7 @@
 				C6F74BDC1DB364EF00871BA7 /* Main.storyboard in Resources */,
 				C6F74BDA1DB364EF00871BA7 /* Assets.xcassets in Resources */,
 				C6196D911DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib in Resources */,
+				C6CC6F671E01609F00240ACE /* SessionCollectionViewCell.xib in Resources */,
 				C6F74BDB1DB364EF00871BA7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -703,6 +710,7 @@
 				C6196D8A1DBF74BA00AFDFEB /* SessionListViewController.swift in Sources */,
 				C6BB0C731DBCDA0D006C2BA7 /* Session+CoreDataProperties.swift in Sources */,
 				C6F74BED1DB3690D00871BA7 /* Exercise+CoreDataClass.swift in Sources */,
+				C6CC6F661E01609F00240ACE /* SessionCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
