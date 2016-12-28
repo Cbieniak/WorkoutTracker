@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Amount" representedClassName=".Amount" syncable="YES">
+        <attribute name="amountValue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="denomination" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Denomination" inverseName="amounts" inverseEntity="Denomination" syncable="YES"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="amounts" inverseEntity="Session" syncable="YES"/>
+    </entity>
+    <entity name="Denomination" representedClassName=".Denomination" syncable="YES">
+        <attribute name="ascending" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="incrementWholeNumber" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="amounts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Amount" inverseName="denomination" inverseEntity="Amount" syncable="YES"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="denominations" inverseEntity="Exercise" syncable="YES"/>
+    </entity>
     <entity name="Exercise" representedClassName=".Exercise" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="primaryKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackedAttributes" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="denominations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Denomination" inverseName="exercises" inverseEntity="Denomination" syncable="YES"/>
         <relationship name="sessions" toMany="YES" deletionRule="Nullify" destinationEntity="Session" inverseName="exercise" inverseEntity="Session" syncable="YES"/>
     </entity>
     <entity name="Session" representedClassName=".Session" syncable="YES">
@@ -13,10 +26,13 @@
         <attribute name="speed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="amounts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Amount" inverseName="session" inverseEntity="Amount" syncable="YES"/>
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sessions" inverseEntity="Exercise" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Exercise" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="Session" positionX="-63" positionY="18" width="128" height="150"/>
+        <element name="Exercise" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Session" positionX="-63" positionY="18" width="128" height="165"/>
+        <element name="Amount" positionX="-45" positionY="72" width="128" height="90"/>
+        <element name="Denomination" positionX="-36" positionY="81" width="128" height="120"/>
     </elements>
 </model>
