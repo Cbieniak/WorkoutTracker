@@ -14,6 +14,7 @@ public class Denomination: NSManagedObject {
     @NSManaged public var ascending: Bool
     @NSManaged public var incrementWholeNumber: Bool
     @NSManaged public var name: String
+    @NSManaged public var suffix: String?
     
     @NSManaged public var amounts: Set<Amount>
     @NSManaged public var exercises: Set<Exercise>

@@ -24,6 +24,7 @@
 		C6ADEF561E1399CC00A31682 /* Denomination.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ADEF501E13946E00A31682 /* Denomination.swift */; };
 		C6ADEF571E1399EB00A31682 /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ADEF521E13953500A31682 /* Amount.swift */; };
 		C6ADEF581E1399EC00A31682 /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ADEF521E13953500A31682 /* Amount.swift */; };
+		C6ADEF5A1E13BA8600A31682 /* CreateDenominationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ADEF591E13BA8600A31682 /* CreateDenominationViewController.swift */; };
 		C6BB0C711DBCDA0D006C2BA7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C6F1DBCDA0D006C2BA7 /* Session.swift */; };
 		C6BB0C721DBCDA0D006C2BA7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C6F1DBCDA0D006C2BA7 /* Session.swift */; };
 		C6CC6F661E01609F00240ACE /* SessionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CC6F641E01609F00240ACE /* SessionCollectionViewCell.swift */; };
@@ -120,6 +121,7 @@
 		C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDatamodel.swift; sourceTree = "<group>"; };
 		C6ADEF501E13946E00A31682 /* Denomination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Denomination.swift; sourceTree = "<group>"; };
 		C6ADEF521E13953500A31682 /* Amount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
+		C6ADEF591E13BA8600A31682 /* CreateDenominationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDenominationViewController.swift; sourceTree = "<group>"; };
 		C6BB0C6F1DBCDA0D006C2BA7 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		C6CC6F641E01609F00240ACE /* SessionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionCollectionViewCell.swift; sourceTree = "<group>"; };
 		C6CC6F651E01609F00240ACE /* SessionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SessionCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				C6F74BF31DB36A0200871BA7 /* ExerciseListViewController.swift */,
 				C6196D891DBF74BA00AFDFEB /* SessionListViewController.swift */,
 				AA57DCC21DE196E5003A1842 /* CreateExerciseViewController.swift */,
+				C6ADEF591E13BA8600A31682 /* CreateDenominationViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 				C6F74BDE1DB364EF00871BA7 /* ExerciseDetailViewController.swift in Sources */,
 				C6F74BE21DB366F100871BA7 /* Datamodel.xcdatamodeld in Sources */,
 				C6F74C161DB637FC00871BA7 /* Datamodel.swift in Sources */,
+				C6ADEF5A1E13BA8600A31682 /* CreateDenominationViewController.swift in Sources */,
 				C6F74BD91DB364EF00871BA7 /* AppDelegate.swift in Sources */,
 				C6ADEF511E13946E00A31682 /* Denomination.swift in Sources */,
 				C6196D901DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift in Sources */,

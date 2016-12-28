@@ -9,6 +9,7 @@
         <attribute name="ascending" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="incrementWholeNumber" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="amounts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Amount" inverseName="denomination" inverseEntity="Amount" syncable="YES"/>
         <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="denominations" inverseEntity="Exercise" syncable="YES"/>
     </entity>
@@ -33,6 +34,6 @@
         <element name="Exercise" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="Session" positionX="-63" positionY="18" width="128" height="165"/>
         <element name="Amount" positionX="-45" positionY="72" width="128" height="90"/>
-        <element name="Denomination" positionX="-36" positionY="81" width="128" height="120"/>
+        <element name="Denomination" positionX="-36" positionY="81" width="128" height="135"/>
     </elements>
 </model>
