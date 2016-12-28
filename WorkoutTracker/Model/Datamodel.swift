@@ -62,6 +62,21 @@ public class Datamodel {
         }
         return []
     }
+    
+    static func allDenominations(_ container: NSPersistentContainer = Datamodel.sharedInstance.container) -> [Denomination] {
+        let nuContext = container.viewContext
+        
+        var results: [Denomination]
+        do {
+            
+            try results = nuContext.fetch(Denomination.fetchRequest())
+            
+            return results
+        } catch {
+            print("Error with request: \(error)")
+        }
+        return []
+    }
    
     
 }
