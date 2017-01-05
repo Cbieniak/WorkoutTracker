@@ -58,6 +58,7 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
         self.unselectedDenominations = Datamodel.allDenominations()
         
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(UINib(nibName: "SessionCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
     }
     
@@ -116,7 +117,7 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
 }
 
 
-extension CreateExerciseViewController {
+extension CreateExerciseViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return self.unselectedDenominations.count
@@ -128,8 +129,8 @@ extension CreateExerciseViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SessionCollectionViewCell
-        
-        cell.titleLabel.text = self.unselectedDenominations[indexPath.row].name
+        let collection = (indexPath.section == 0 ? self.unselectedDenominations : self.selectedDenominations)
+        cell.titleLabel.text = collection[indexPath.row].name
         return cell
     }
     
@@ -156,12 +157,42 @@ extension CreateExerciseViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let item1 = self.unselectedDenominations[sourceIndexPath.row]
-        self.unselectedDenominations.remove(at: sourceIndexPath.row)
-        self.unselectedDenominations.insert(item1, at: destinationIndexPath.row)
+        if sourceIndexPath.section == destinationIndexPath.section {
+            if sourceIndexPath.section == 0 {
+                let item1 = self.unselectedDenominations[sourceIndexPath.row]
+                self.unselectedDenominations.remove(at: sourceIndexPath.row)
+                self.unselectedDenominations.insert(item1, at: destinationIndexPath.row)
+            } else {
+                let item1 = self.selectedDenominations[sourceIndexPath.row]
+                self.selectedDenominations.remove(at: sourceIndexPath.row)
+                self.selectedDenominations.insert(item1, at: destinationIndexPath.row)
+            }
+        } else if sourceIndexPath.section == 0, destinationIndexPath.section == 1 {
+            let item1 = self.unselectedDenominations[sourceIndexPath.row]
+            self.unselectedDenominations.remove(at: sourceIndexPath.row)
+            self.selectedDenominations.append(item1)
+        } else {
+            let item1 = self.selectedDenominations[sourceIndexPath.row]
+            self.selectedDenominations.remove(at: sourceIndexPath.row)
+            self.unselectedDenominations.append(item1)
+        }
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let item = self.unselectedDenominations[indexPath.row]
+            self.unselectedDenominations.remove(at: indexPath.row)
+            self.selectedDenominations.append(item)
+        } else {
+            let item = self.selectedDenominations[indexPath.row]
+            self.selectedDenominations.remove(at: indexPath.row)
+            self.unselectedDenominations.append(item)
+        }
+        self.collectionView.reloadData()
     }
 }
