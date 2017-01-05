@@ -30,8 +30,6 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
     var selectedDenominations: Array<Denomination> = []
     var unselectedDenominations: Array<Denomination> = []
     
-    var exerciseAdded: ((Exercise) -> ())?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,9 +73,12 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
         //save things
         
         exercise.name = nameTextField.text
+        exercise.denominations = NSOrderedSet(array: self.selectedDenominations)
         do {
             try self.context.save()
-            exerciseAdded?(exercise)
+            self.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "exerciseCreated"), object: nil)
+            _ = self.navigationController?.popToRootViewController(animated: false)
         } catch {
             print("error\(error)")
         }

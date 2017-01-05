@@ -35,6 +35,8 @@ class ExerciseListViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = addBarButtonItem
         
         NotificationCenter.default.addObserver(self, selector: #selector(createDenomFinished), name: NSNotification.Name(rawValue: "denominationCreated"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(createExerciseFinished), name: NSNotification.Name(rawValue: "exerciseCreated"), object: nil)
 
     }
     
@@ -52,6 +54,11 @@ class ExerciseListViewController: UIViewController {
         self.removeChildVC()
     }
     
+    func createExerciseFinished() {
+        self.collectionView.reloadData()
+        self.removeChildVC()
+    }
+    
     func addNewExercise() {
     
         UIView.animate(withDuration: 0.3) {
@@ -59,9 +66,6 @@ class ExerciseListViewController: UIViewController {
             self.backgroundView.alpha = 1.0
             self.navigationItem.rightBarButtonItem = self.doneBarButtonItem
         }
-//        createExerciseViewController.exerciseAdded = { _ in
-//            self.removeChildVC()
-//        }
         
     }
     
@@ -72,15 +76,7 @@ class ExerciseListViewController: UIViewController {
             self.containerView.alpha = 0.0
             self.backgroundView.alpha = 0.0
         }
-        //createExerciseViewController.reset()
         
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-//        if segue.identifier == "childVC" {
-//            createExerciseViewController = segue.destination as! CreateExerciseViewController
-//        }
     }
 
 }
