@@ -27,9 +27,12 @@ public class Session: NSManagedObject {
         formatter.locale = NSLocale.current
         formatter.dateStyle = .short
         formatter.timeStyle = .none
-        
+        //get order from exercise
         let dateStr = formatter.string(from: self.date as! Date)
-        let sessionInfo: String =  self.exercise!.trackedAttributes.reduce("", { $0 + " " + String(describing: (self.value(forKey: $1 as! String)) ?? "") + " " + Session.trackedAttributeSuffix(attr: $1 as! String) + "\n" })
+        let currentAmounts = self.amounts!.allObjects as! [Amount]
+        let currentAmountString = currentAmounts.map { ($0.denomination.incrementWholeNumber ? String(describing: Int($0.amountValue)) : String(describing: Int($0.amountValue))) + " " + ($0.denomination.suffix ?? $0.denomination.name) + "\n" }
+        let sessionInfo:String = currentAmountString.reduce(""){ $0 + $1 }
+
         return sessionInfo + dateStr
         
     }
