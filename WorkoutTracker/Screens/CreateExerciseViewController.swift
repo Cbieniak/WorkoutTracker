@@ -42,9 +42,7 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
         exercise.primaryKey = UUID().uuidString
         exercise.sessions = NSSet()
         exercise.trackedAttributes = NSArray()
-        
-        self.view.layer.cornerRadius = 10
-        self.view.layer.borderWidth = 1
+
         self.view.layer.borderColor = orange.cgColor
         nameTextField.layer.cornerRadius = 10
         nameTextField.layer.borderWidth = 1
@@ -68,6 +66,10 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
         self.nameTextField.text = ""
     }
 
+    @IBAction func cancelButtonTouchedUpInside(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func saveButtonTouchedUpInside(_ sender: UIButton) {
         //create exercise
         //save things
@@ -118,13 +120,28 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
 }
 
 
-extension CreateExerciseViewController: UICollectionViewDelegate {
+extension CreateExerciseViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return self.unselectedDenominations.count
         } else {
             return self.selectedDenominations.count
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 1 {
+            return CGSize(width: self.collectionView.frame.width, height: 50)
+        }
+        
+        return CGSize(width: 0, height: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerView", for: indexPath)
+        
+        return headerView
     }
     
     
@@ -196,4 +213,9 @@ extension CreateExerciseViewController: UICollectionViewDelegate {
         }
         self.collectionView.reloadData()
     }
+}
+
+class CreateExerciseCollectionViewHeader: UICollectionReusableView {
+    
+    
 }

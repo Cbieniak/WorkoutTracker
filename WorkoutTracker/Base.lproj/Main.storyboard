@@ -177,7 +177,7 @@
             </objects>
             <point key="canvasLocation" x="1916" y="-30.134932533733135"/>
         </scene>
-        <!--View Controller-->
+        <!--Create-->
         <scene sceneID="ROb-pW-kY2">
             <objects>
                 <viewController id="NTX-wh-OVw" sceneMemberID="viewController">
@@ -200,7 +200,7 @@
                                 <rect key="frame" x="16" y="64" width="303" height="143"/>
                                 <state key="normal" title="Exercise"/>
                                 <connections>
-                                    <segue destination="lZ5-5T-PqM" kind="presentation" id="9HU-7F-O9l"/>
+                                    <segue destination="NR8-Cv-Wsb" kind="presentation" id="9HU-7F-O9l"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -217,7 +217,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="jmF-mf-Yf3" secondAttribute="trailing" id="zco-Ir-ene"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Z52-bO-nuH"/>
+                    <navigationItem key="navigationItem" title="Create" id="Z52-bO-nuH"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EbU-Pw-vnu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -287,7 +287,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qIh-tS-TKY">
-                                        <rect key="frame" x="278" y="14.5" width="51" height="31"/>
+                                        <rect key="frame" x="278" y="15" width="51" height="31"/>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -352,7 +352,7 @@
                         <viewControllerLayoutGuide type="bottom" id="iAk-wp-h4F"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4hl-Qz-z5X">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FbX-nX-PVe">
@@ -365,7 +365,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YFO-PY-Rnm">
-                                <rect key="frame" x="26" y="611" width="323" height="40"/>
+                                <rect key="frame" x="26" y="547" width="323" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="TbQ-4i-wMg"/>
                                 </constraints>
@@ -376,17 +376,17 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="395-Go-ZMI">
-                                <rect key="frame" x="24" y="66" width="327" height="529"/>
+                                <rect key="frame" x="0.0" y="50" width="375" height="497"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cAN-rv-0PR">
                                     <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="8" minY="16" maxX="8" maxY="16"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="J40-hl-sV1">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="8" y="66" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -394,22 +394,53 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerView" id="Pmj-cc-iMX" customClass="CreateExerciseCollectionViewHeader" customModule="WorkoutTracker" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attributes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyJ-oB-t84">
+                                            <rect key="frame" x="8" y="8" width="359" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="IyJ-oB-t84" firstAttribute="top" secondItem="Pmj-cc-iMX" secondAttribute="topMargin" id="4Ds-sM-zWU"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="IyJ-oB-t84" secondAttribute="trailing" id="9Jh-L5-E1R"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="IyJ-oB-t84" secondAttribute="bottom" id="9Z7-DT-9jc"/>
+                                        <constraint firstItem="IyJ-oB-t84" firstAttribute="leading" secondItem="Pmj-cc-iMX" secondAttribute="leadingMargin" id="DoR-3W-s9M"/>
+                                    </constraints>
+                                </collectionReusableView>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="395-Go-ZMI" firstAttribute="top" secondItem="FbX-nX-PVe" secondAttribute="bottom" constant="16" id="0pb-Yp-tSN"/>
+                            <constraint firstItem="395-Go-ZMI" firstAttribute="top" secondItem="FbX-nX-PVe" secondAttribute="bottom" id="0pb-Yp-tSN"/>
                             <constraint firstItem="FbX-nX-PVe" firstAttribute="top" secondItem="4hl-Qz-z5X" secondAttribute="topMargin" constant="10" id="5N5-50-cHJ"/>
-                            <constraint firstItem="YFO-PY-Rnm" firstAttribute="top" secondItem="395-Go-ZMI" secondAttribute="bottom" constant="16" id="87W-NC-g0w"/>
+                            <constraint firstItem="YFO-PY-Rnm" firstAttribute="top" secondItem="395-Go-ZMI" secondAttribute="bottom" id="87W-NC-g0w"/>
+                            <constraint firstAttribute="trailing" secondItem="395-Go-ZMI" secondAttribute="trailing" id="GH0-im-dKN"/>
                             <constraint firstItem="FbX-nX-PVe" firstAttribute="leading" secondItem="4hl-Qz-z5X" secondAttribute="leadingMargin" constant="10" id="Oai-Q9-PBG"/>
                             <constraint firstItem="YFO-PY-Rnm" firstAttribute="leading" secondItem="4hl-Qz-z5X" secondAttribute="leadingMargin" constant="10" id="RN6-Mp-HeS"/>
+                            <constraint firstItem="395-Go-ZMI" firstAttribute="leading" secondItem="4hl-Qz-z5X" secondAttribute="leading" id="Tmh-yV-r5h"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YFO-PY-Rnm" secondAttribute="trailing" constant="10" id="kAO-MQ-Iqa"/>
-                            <constraint firstItem="395-Go-ZMI" firstAttribute="leading" secondItem="4hl-Qz-z5X" secondAttribute="leadingMargin" constant="8" id="laM-gX-tGR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FbX-nX-PVe" secondAttribute="trailing" constant="10" id="m7S-cw-jFp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="395-Go-ZMI" secondAttribute="trailing" constant="8" id="ttu-CX-h6O"/>
                             <constraint firstItem="iAk-wp-h4F" firstAttribute="top" secondItem="YFO-PY-Rnm" secondAttribute="bottom" constant="16" id="ub5-9u-bB4"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="BML-V2-GHS">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" style="plain" id="QUr-TD-RYQ">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Sch-9Q-wQ3">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonTouchedUpInside:" destination="lZ5-5T-PqM" eventType="touchUpInside" id="W1z-q0-Aai"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="395-Go-ZMI" id="qUe-KY-8vs"/>
                         <outlet property="nameTextField" destination="FbX-nX-PVe" id="jeN-HO-mML"/>
@@ -417,7 +448,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dXw-nC-1MM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2938" y="-264"/>
+            <point key="canvasLocation" x="3874.4000000000001" y="-194.75262368815595"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Goc-p1-h9J">
@@ -594,6 +625,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cOD-hc-HZ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1197.5999999999999" y="-811.39430284857576"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gIl-ex-gcP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NR8-Cv-Wsb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8XI-rT-Xea">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lZ5-5T-PqM" kind="relationship" relationship="rootViewController" id="QP5-Br-b7M"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QIP-xM-2Hh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2933.5999999999999" y="-195.6521739130435"/>
         </scene>
     </scenes>
 </document>
