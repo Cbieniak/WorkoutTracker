@@ -17,6 +17,7 @@
 		C6196D911DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6196D8F1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib */; };
 		C62EFF3F1DB97D3600125BDB /* WatchDatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */; };
 		C62EFF401DB97DDF00125BDB /* WatchDatamodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */; };
+		C641FF001E3482D8003F7DB3 /* UIView+Designables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C641FEFF1E3482D8003F7DB3 /* UIView+Designables.swift */; };
 		C6ADEF511E13946E00A31682 /* Denomination.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ADEF501E13946E00A31682 /* Denomination.swift */; };
 		C6ADEF531E13953500A31682 /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6ADEF521E13953500A31682 /* Amount.swift */; };
 		C6ADEF541E1399C700A31682 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BB0C6F1DBCDA0D006C2BA7 /* Session.swift */; };
@@ -119,6 +120,7 @@
 		C6196D8E1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseCollectionViewCell.swift; sourceTree = "<group>"; };
 		C6196D8F1DBF7DFC00AFDFEB /* ExerciseCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExerciseCollectionViewCell.xib; sourceTree = "<group>"; };
 		C62EFF3E1DB97D3600125BDB /* WatchDatamodel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchDatamodel.swift; sourceTree = "<group>"; };
+		C641FEFF1E3482D8003F7DB3 /* UIView+Designables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Designables.swift"; sourceTree = "<group>"; };
 		C6ADEF501E13946E00A31682 /* Denomination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Denomination.swift; sourceTree = "<group>"; };
 		C6ADEF521E13953500A31682 /* Amount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
 		C6ADEF591E13BA8600A31682 /* CreateDenominationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDenominationViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		C641FEFE1E3482D8003F7DB3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C641FEFF1E3482D8003F7DB3 /* UIView+Designables.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C6F74B7D1DB3643200871BA7 = {
 			isa = PBXGroup;
 			children = (
@@ -288,6 +298,7 @@
 		C6F74BCE1DB364EF00871BA7 /* WorkoutTracker */ = {
 			isa = PBXGroup;
 			children = (
+				C641FEFE1E3482D8003F7DB3 /* Extensions */,
 				C6196D8D1DBF7DDC00AFDFEB /* Cell */,
 				C6F74C121DB6356500871BA7 /* WorkoutTracker.entitlements */,
 				C6F74BDF1DB366DE00871BA7 /* Model */,
@@ -710,6 +721,7 @@
 				C6F74BDE1DB364EF00871BA7 /* ExerciseDetailViewController.swift in Sources */,
 				C6F74BE21DB366F100871BA7 /* Datamodel.xcdatamodeld in Sources */,
 				C6F74C161DB637FC00871BA7 /* Datamodel.swift in Sources */,
+				C641FF001E3482D8003F7DB3 /* UIView+Designables.swift in Sources */,
 				C6ADEF5A1E13BA8600A31682 /* CreateDenominationViewController.swift in Sources */,
 				C6F74BD91DB364EF00871BA7 /* AppDelegate.swift in Sources */,
 				C6ADEF511E13946E00A31682 /* Denomination.swift in Sources */,

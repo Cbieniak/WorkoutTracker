@@ -81,7 +81,7 @@ class ExerciseListViewController: UIViewController {
 
 }
 
-extension ExerciseListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ExerciseListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = Datamodel.allExercises().count
@@ -97,6 +97,11 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
         
         
         cell.titleLabel.text = Datamodel.allExercises()[indexPath.row].name
+        
+        cell.latestValueLabel.text = ""
+        cell.latestDateLabel.text = ""
+        cell.topValueLabel.text = ""
+        cell.topDateLabel.text = ""
         
         return cell
         
@@ -117,6 +122,10 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
         self.navigationController?.pushViewController(edc, animated: true)
         
        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize  {
+        return CGSize(width: self.collectionView.frame.width, height: 132)
     }
     
 }
