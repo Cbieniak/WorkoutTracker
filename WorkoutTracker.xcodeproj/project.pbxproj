@@ -928,7 +928,7 @@
 				DEVELOPMENT_TEAM = BE5LEG686Z;
 				INFOPLIST_FILE = "WorkoutTracker WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bieniapps.WorkoutTracker.watchkitapp.watchkitExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bieniapps.WorkoutTracker.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -946,7 +946,7 @@
 				DEVELOPMENT_TEAM = BE5LEG686Z;
 				INFOPLIST_FILE = "WorkoutTracker WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bieniapps.WorkoutTracker.watchkitapp.watchkitExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bieniapps.WorkoutTracker.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
