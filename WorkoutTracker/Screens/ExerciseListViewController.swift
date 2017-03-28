@@ -16,6 +16,11 @@ class ExerciseListViewController: UIViewController {
     var createExerciseViewController: CreateExerciseViewController!
     var context: NSManagedObjectContext!
     
+    var addBarButtonItem: UIBarButtonItem!
+    
+    var doneBarButtonItem: UIBarButtonItem!
+    
+    @IBOutlet weak var backgroundView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         context = Datamodel.sharedInstance.container.viewContext
@@ -23,8 +28,15 @@ class ExerciseListViewController: UIViewController {
         self.collectionView.dataSource = self
         self.collectionView.register(UINib.init(nibName: "ExerciseCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ExerciseCollectionViewCell")
         
+        addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewExercise))
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewExercise))
+        doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(clearAddedExercise))
+        
+        self.navigationItem.rightBarButtonItem = addBarButtonItem
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(createDenomFinished), name: NSNotification.Name(rawValue: "denominationCreated"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(createExerciseFinished), name: NSNotification.Name(rawValue: "exerciseCreated"), object: nil)
 
     }
     
@@ -33,30 +45,43 @@ class ExerciseListViewController: UIViewController {
         self.collectionView.reloadData()
     }
     
-    func addNewExercise() {
-//        let sb = UIStoryboard.init(name: "Main", bundle: nil)
-//        
-//        self.navigationController?.pushViewController(sb.instantiateViewController(withIdentifier: "ExerciseDetailViewController"), animated: true)
+    func clearAddedExercise() {
+        //todo clear unmade exercises
+        removeChildVC()
+    }
     
-        UIView.animate(withDuration: 0.3) { self.containerView.alpha = 1.0 }
-        createExerciseViewController.exerciseAdded = {
-            print($0)
-            self.collectionView.reloadData()
-            UIView.animate(withDuration: 0.3) { self.containerView.alpha = 0.0 }
+    func createDenomFinished() {
+        self.removeChildVC()
+    }
+    
+    func createExerciseFinished() {
+        self.collectionView.reloadData()
+        self.removeChildVC()
+    }
+    
+    func addNewExercise() {
+    
+        UIView.animate(withDuration: 0.3) {
+            self.containerView.alpha = 1.0
+            self.backgroundView.alpha = 1.0
+            self.navigationItem.rightBarButtonItem = self.doneBarButtonItem
         }
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        if segue.identifier == "childVC" {
-            createExerciseViewController = segue.destination as! CreateExerciseViewController
+    func removeChildVC() {
+        self.collectionView.reloadData()
+        self.navigationItem.rightBarButtonItem = self.addBarButtonItem
+        UIView.animate(withDuration: 0.3) {
+            self.containerView.alpha = 0.0
+            self.backgroundView.alpha = 0.0
         }
+        
     }
 
 }
 
-extension ExerciseListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ExerciseListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = Datamodel.allExercises().count
@@ -72,6 +97,11 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
         
         
         cell.titleLabel.text = Datamodel.allExercises()[indexPath.row].name
+        
+        cell.latestValueLabel.text = ""
+        cell.latestDateLabel.text = ""
+        cell.topValueLabel.text = ""
+        cell.topDateLabel.text = ""
         
         return cell
         
@@ -92,6 +122,10 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
         self.navigationController?.pushViewController(edc, animated: true)
         
        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize  {
+        return CGSize(width: self.collectionView.frame.width, height: 132)
     }
     
 }

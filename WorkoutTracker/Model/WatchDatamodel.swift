@@ -42,15 +42,10 @@ public class WatchDataModel {
         var results: [Exercise]
         do {
             
-            try results = nuContext.fetch(Exercise.fetchRequest())
+            try results = nuContext.fetch(Exercise.fetchRequest()).filter { $0.name != nil }.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased()  })
             
             return results
-            //             print("\(searchResults)")
-            ////            return searchResults.map { exercise in
-            ////                return exercise as! Exercise
-            ////                //return Exercise(dictionary: exercise as! [String: AnyObject])
-            ////            }
-            // return searchResults as! [Exercise]
+            
         } catch {
             print("Error with request: \(error)")
         }

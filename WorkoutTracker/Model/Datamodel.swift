@@ -39,7 +39,7 @@ public class Datamodel {
         
         var results: [Exercise]
         do {
-            try results = nuContext.fetch(Exercise.fetchRequest())
+            try results = nuContext.fetch(Exercise.fetchRequest()).filter { $0.name != nil }.sorted(by: { $0.name!.lowercased() < $1.name!.lowercased()  })
             
             return results
         } catch {
@@ -55,6 +55,21 @@ public class Datamodel {
         do {
             
             try results = nuContext.fetch(Session.fetchRequest())
+            
+            return results
+        } catch {
+            print("Error with request: \(error)")
+        }
+        return []
+    }
+    
+    static func allDenominations(_ container: NSPersistentContainer = Datamodel.sharedInstance.container) -> [Denomination] {
+        let nuContext = container.viewContext
+        
+        var results: [Denomination]
+        do {
+            
+            try results = nuContext.fetch(Denomination.fetchRequest())
             
             return results
         } catch {

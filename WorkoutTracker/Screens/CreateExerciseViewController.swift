@@ -14,68 +14,73 @@ enum updateStatus {
     case removed
 }
 
-class CreateExerciseViewController: UIViewController {
+class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var nameTextField: UITextField!
     
-    @IBOutlet weak var repsButton: UIButton!
-    @IBOutlet weak var weightButton: UIButton!
-    @IBOutlet weak var distanceButton: UIButton!
-    @IBOutlet weak var timeButton: UIButton!
+    let orange =  UIColor(colorLiteralRed: 44.0/255.0, green: 62.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+    
+  
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var exercise: Exercise!
     
     var context: NSManagedObjectContext!
     
-    var exerciseAdded: ((Exercise) -> ())?
+    var selectedDenominations: Array<Denomination> = []
+    var unselectedDenominations: Array<Denomination> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         context = Datamodel.sharedInstance.container.viewContext
         
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture(gesture:)))
+        self.collectionView.addGestureRecognizer(longPressGesture)
+        
         exercise = Exercise(context: context)
         exercise.primaryKey = UUID().uuidString
         exercise.sessions = NSSet()
         exercise.trackedAttributes = NSArray()
+
+        self.view.layer.borderColor = orange.cgColor
+        nameTextField.layer.cornerRadius = 10
+        nameTextField.layer.borderWidth = 1
+        nameTextField.textColor = orange
+        nameTextField.layer.borderColor = orange.cgColor
         
-        self.view.layer.cornerRadius = 10
-        self.view.layer.borderWidth = 1
-        self.view.layer.borderColor = UIColor.black.cgColor
+        nameTextField.delegate = self
         
-        buttonStyling()
-        // Do any additional setup after loading the view.
+        self.unselectedDenominations = Datamodel.allDenominations()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(UINib(nibName: "SessionCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
     }
     
-    @IBAction func repsButtonTouchedUpInside(_ sender: UIButton) {
-        let status = updateTrackStatus(attribute: "reps")
-        toggleButtonStyle(button: sender, state: status == .added)
+    func reset() {
+        exercise = Exercise(context: context)
+        exercise.primaryKey = UUID().uuidString
+        exercise.sessions = NSSet()
+        exercise.trackedAttributes = NSArray()
+        self.nameTextField.text = ""
     }
 
-    @IBAction func weightButtonTouchedUpInside(_ sender: UIButton) {
-        let status = updateTrackStatus(attribute: "weight")
-        toggleButtonStyle(button: sender, state: status == .added)
+    @IBAction func cancelButtonTouchedUpInside(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func distanceButtonTouchedUpInside(_ sender: UIButton) {
-        let status = updateTrackStatus(attribute: "distance")
-        toggleButtonStyle(button: sender, state: status == .added)
-    }
-    
-    @IBAction func timeButtonTouchedUpInside(_ sender: UIButton) {
-        let status = updateTrackStatus(attribute: "time")
-        toggleButtonStyle(button: sender, state: status == .added)
-    }
-
-
     @IBAction func saveButtonTouchedUpInside(_ sender: UIButton) {
         //create exercise
         //save things
         
         exercise.name = nameTextField.text
+        exercise.denominations = NSOrderedSet(array: self.selectedDenominations)
         do {
             try self.context.save()
-            exerciseAdded?(exercise)
+            self.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "exerciseCreated"), object: nil)
+            _ = self.navigationController?.popToRootViewController(animated: false)
         } catch {
             print("error\(error)")
         }
@@ -83,20 +88,12 @@ class CreateExerciseViewController: UIViewController {
     
     func toggleButtonStyle(button: UIButton, state: Bool) {
         if state {
-            button.backgroundColor = .black
+            button.backgroundColor = orange
             button.setTitleColor(.white, for: .normal)
         } else {
             button.backgroundColor = .clear
-            button.setTitleColor(.black, for: .normal)
-        }
-    }
-    
-    func buttonStyling() {
-        for button in [repsButton, weightButton, distanceButton, timeButton] {
-            button!.layer.cornerRadius = 10
-            button!.layer.borderWidth = 1
-            button!.layer.borderColor = UIColor.black.cgColor
-            toggleButtonStyle(button: button!, state: false)
+            
+            button.setTitleColor(orange, for: .normal)
         }
     }
     
@@ -112,5 +109,113 @@ class CreateExerciseViewController: UIViewController {
             return .added
         }
     }
+    
+    //MARK: Delegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.nameTextField.resignFirstResponder()
+        return true
+    }
 
+}
+
+
+extension CreateExerciseViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return self.unselectedDenominations.count
+        } else {
+            return self.selectedDenominations.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 1 {
+            return CGSize(width: self.collectionView.frame.width, height: 50)
+        }
+        
+        return CGSize(width: 0, height: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerView", for: indexPath)
+        
+        return headerView
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SessionCollectionViewCell
+        let collection = (indexPath.section == 0 ? self.unselectedDenominations : self.selectedDenominations)
+        cell.titleLabel.text = collection[indexPath.row].name
+        return cell
+    }
+    
+    func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        
+        switch(gesture.state) {
+            
+        case UIGestureRecognizerState.began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case UIGestureRecognizerState.changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case UIGestureRecognizerState.ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if sourceIndexPath.section == destinationIndexPath.section {
+            if sourceIndexPath.section == 0 {
+                let item1 = self.unselectedDenominations[sourceIndexPath.row]
+                self.unselectedDenominations.remove(at: sourceIndexPath.row)
+                self.unselectedDenominations.insert(item1, at: destinationIndexPath.row)
+            } else {
+                let item1 = self.selectedDenominations[sourceIndexPath.row]
+                self.selectedDenominations.remove(at: sourceIndexPath.row)
+                self.selectedDenominations.insert(item1, at: destinationIndexPath.row)
+            }
+        } else if sourceIndexPath.section == 0, destinationIndexPath.section == 1 {
+            let item1 = self.unselectedDenominations[sourceIndexPath.row]
+            self.unselectedDenominations.remove(at: sourceIndexPath.row)
+            self.selectedDenominations.append(item1)
+        } else {
+            let item1 = self.selectedDenominations[sourceIndexPath.row]
+            self.selectedDenominations.remove(at: sourceIndexPath.row)
+            self.unselectedDenominations.append(item1)
+        }
+        
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+       return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let item = self.unselectedDenominations[indexPath.row]
+            self.unselectedDenominations.remove(at: indexPath.row)
+            self.selectedDenominations.append(item)
+        } else {
+            let item = self.selectedDenominations[indexPath.row]
+            self.selectedDenominations.remove(at: indexPath.row)
+            self.unselectedDenominations.append(item)
+        }
+        self.collectionView.reloadData()
+    }
+}
+
+class CreateExerciseCollectionViewHeader: UICollectionReusableView {
+    
+    
 }
