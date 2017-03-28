@@ -83,14 +83,14 @@ public class Datamodel {
 
 final class PersistentContainer: NSPersistentContainer {
     
-    static let sharedAppGroup:String = "group.bieniapps.WorkoutTracker"
-    internal override class func defaultDirectoryURL() -> URL {
-        var url = super.defaultDirectoryURL()
-        if let newURL =
-            FileManager.default.containerURL(
-                forSecurityApplicationGroupIdentifier: PersistentContainer.sharedAppGroup) {
-            url = newURL
-        }
-        return url
-    }
+//    static let sharedAppGroup:String = "group.bieniapps.WorkoutTracker"
+//    internal override class func defaultDirectoryURL() -> URL {
+//        var url = super.defaultDirectoryURL()
+//        if let newURL =
+//            FileManager.default.containerURL(
+//                forSecurityApplicationGroupIdentifier: PersistentContainer.sharedAppGroup) {
+//            url = newURL
+//        }
+//        return url
+//    }
 }

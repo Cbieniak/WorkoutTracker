@@ -25,7 +25,7 @@ class CreateDenominationViewController: UIViewController, UITextFieldDelegate {
     @IBAction func saveTouchedUpInside(_ sender: Any) {
         //create denomination
         let context = Datamodel.sharedInstance.container.viewContext
-        
+    
         let denomination = Denomination(context: context)
         
         denomination.name = self.nameTextField.text ?? ""

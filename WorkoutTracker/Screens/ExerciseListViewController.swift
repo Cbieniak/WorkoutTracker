@@ -20,6 +20,14 @@ class ExerciseListViewController: UIViewController {
     
     var doneBarButtonItem: UIBarButtonItem!
     
+    let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = NSLocale.current
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter
+    }()
+    
     @IBOutlet weak var backgroundView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +55,7 @@ class ExerciseListViewController: UIViewController {
     
     func clearAddedExercise() {
         //todo clear unmade exercises
-        removeChildVC()
+        self.removeChildVC()
     }
     
     func createDenomFinished() {
@@ -95,13 +103,29 @@ extension ExerciseListViewController: UICollectionViewDataSource, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExerciseCollectionViewCell", for: indexPath) as! ExerciseCollectionViewCell
         
         
+        let exercise = Datamodel.allExercises()[indexPath.row]
+        cell.titleLabel.text = exercise.name
         
-        cell.titleLabel.text = Datamodel.allExercises()[indexPath.row].name
+        let allSessions = (exercise.sessions.allObjects as! [Session]).sorted(by: { $0.date!.compare($1.date! as Date) == .orderedDescending })
+        //how to sort
+        //exercise -> session
+        //session has amounts
+        //exercise has denominations
+        let denom: Denomination = exercise.denominations.firstObject as! Denomination
         
-        cell.latestValueLabel.text = ""
-        cell.latestDateLabel.text = ""
-        cell.topValueLabel.text = ""
-        cell.topDateLabel.text = ""
+        let sortedSessions = allSessions.sorted {
+            $0.valueForDeonomination(denom: denom) > $1.valueForDeonomination(denom: denom)
+        }
+        
+        if let mostRecentSession = allSessions.first {
+            cell.latestValueLabel.text = "\(mostRecentSession.valueForDeonomination(denom: denom))"
+            cell.latestDateLabel.text = self.formatter.string(from: mostRecentSession.date as! Date)
+        }
+    
+        if let bestSession = sortedSessions.first {
+            cell.topValueLabel.text = "\(bestSession.valueForDeonomination(denom: denom))"
+            cell.topDateLabel.text = self.formatter.string(from: bestSession.date as! Date)
+        }
         
         return cell
         
