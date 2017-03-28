@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 import WatchConnectivity
 
-class InterfaceController: WKInterfaceController, WCSessionDelegate {
+class InterfaceController: WKInterfaceController, WCSessionDelegate, NSKeyedUnarchiverDelegate {
     
     var session: WCSession? {
         didSet {
@@ -22,7 +22,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
     }
     
-    var exercises: [Exercise] = [] {
+    var exercises: [TransferrableExercise] = [] {
         didSet {
             self.tableView.setNumberOfRows(exercises.count, withRowType: "temp")
             if exercises.count > 0 {
@@ -46,17 +46,57 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     @IBAction func syncTouchedUpInside() {
-        self.session!.sendMessage([:], replyHandler: nil, errorHandler: { (error) -> Void in
+        self.session!.sendMessage(["exercises" : "all"], replyHandler: { result in
+            if let dictionaries = result["exercises"] as? [[String: Any]] {
+//               self.exercises = dictionaries.flatMap({ NSKeyedUnarchiver.unarchiveObject(with: $0)}).flatMap { Exercise.init(from: $0 as! [String: Any])  }
+                
+                
+                self.exercises = dictionaries.flatMap({ return TransferrableExercise(name: $0["name"] as! String, primaryKey: $0["primaryKey"] as! String) })
+            }
+            
+            
+            
+            
+        }) { (error) in
             print(error)
-        })
+        }
+        
+    }
+    
+    func decodeThisShit(data: Data) -> Exercise? {
+        //let exe = Exercise(context: Datamodel.sharedInstance.container.viewContext)
+        do {
+            
+            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+            unarchiver.setClass(Exercise.self, forClassName: "WorkoutTracker.Exercise")
+            unarchiver.delegate = self
+            let decode = try unarchiver.decodeTopLevelObject(forKey: "root") as! Exercise
+            return decode
+            // OR `unarchiver.decodeTopLevelObject()` depends on how you archived.
+        }
+        catch let (err) {
+            print(err)
+            return nil
+        }
+
     }
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        
+        
+//        self.session!.sendMessage(["exercises" : "all"], replyHandler: { result in
+//            if let dictionaries = result["exercises"] as? [Data] {
+//                self.exercises = dictionaries.flatMap({ NSKeyedUnarchiver.unarchiveObject(with: $0)}).flatMap { Exercise.init(from: $0 as! [String: Any])  }
+//            }
+//            
+//            
+//            
+//            
+//        }) { (error) in
+//            print(error)
+//        }
     
-        if let container = WatchDataModel().container {
-            self.exercises = WatchDataModel.allExercises(container)
-        }
         
        //https://www.raywenderlich.com/117329/watchos-2-tutorial-part-4-watch-connectivity
         
@@ -81,36 +121,15 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceive file: WCSessionFile) {
 
-        do {
-            var x = FileManager.default.containerURL(
-                forSecurityApplicationGroupIdentifier: PersistentContainer.sharedAppGroup)
-            x = x!.appendingPathComponent("numodel.sqlite")
-            do {
-                try FileManager.default.removeItem(at: x!)
-            } catch {
-                print(error)
-            }
-
-            try FileManager.default.moveItem(at: file.fileURL, to:x!)
-
-            print("error: ", file)
-            
-            let dm = WatchDataModel.sharedInstance
-            dm.setupContainer(with: x!, completionHandler: { (test, error) in
-                self.exercises = WatchDataModel.allExercises(dm.container!)
-            })
-
-        } catch {
-            print(error)
-        }
     }
     
     override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
-        let exercise = WatchDataModel.allExercises(WatchDataModel.sharedInstance.container!)[rowIndex]
+        let exercise = self.exercises[rowIndex]
         //get exercise
         //pass it through
         self.pushController(withName: "AddSession", context: exercise)
     }
+    
 
 }
 

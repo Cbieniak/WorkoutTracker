@@ -16,7 +16,6 @@ class ExerciseDetailViewController: UIViewController {
     var context: NSManagedObjectContext!
     
     @IBOutlet weak var attributeTableView: UITableView!
-    @IBOutlet weak var nameTextField: UITextField!
 
     var sessionVC: SessionListViewController!
     
@@ -34,7 +33,7 @@ class ExerciseDetailViewController: UIViewController {
             exercise.trackedAttributes = NSArray()
         } else {
             exercise = context.object(with: exercise.objectID) as! Exercise
-            self.nameTextField.text = exercise.name
+            self.title = exercise.name
         }
 
         self.attributeTableView.dataSource = self
@@ -50,7 +49,7 @@ class ExerciseDetailViewController: UIViewController {
                 sessionVC = vc
                 sessionVC.bestOrMostRecentTouched = {
                     let currentConstant = self.containerViewHeightConstraint.constant
-                    self.containerViewHeightConstraint.constant = currentConstant == 100 ? 400 : 100
+                    self.containerViewHeightConstraint.constant = currentConstant == 110 ? 400 : 110
                     
                     UIView.animate(withDuration: 0.3) {
                        self.view.layoutIfNeeded()
@@ -63,7 +62,6 @@ class ExerciseDetailViewController: UIViewController {
 
     
     @IBAction func saveTouchedUpInside(_ sender: AnyObject) {
-        exercise.name = nameTextField.text
         let session = Session(context: context)
         
         session.date = NSDate()
@@ -104,8 +102,7 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AttributeCell", for: indexPath) as! AttributeCell
-        cell.textField.text = nil
-        cell.textField.placeholder = (exercise.denominations.array[indexPath.row] as! Denomination).name
+        cell.titleLabel.text = (exercise.denominations.array[indexPath.row] as! Denomination).name
         return cell
      
     }
@@ -114,5 +111,6 @@ extension ExerciseDetailViewController: UITableViewDelegate, UITableViewDataSour
 class AttributeCell: UITableViewCell {
     
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var titleLabel: UILabel!
 }
 

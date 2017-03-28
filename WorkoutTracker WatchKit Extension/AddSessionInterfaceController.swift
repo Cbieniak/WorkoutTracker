@@ -13,10 +13,12 @@ import WatchConnectivity
 
 class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
     
-    var exercise: Exercise!
+    var exercise: TransferrableExercise!
+    var denominations: [TransferrableDenomination] = []
+    var amounts: [TransferrableAmount] = []
     var session: Session!
     
-    var currentlyTrackedAttribute: String?
+    var currentlyTrackedAttribute: TransferrableDenomination?
     
     @IBOutlet var titleLabel: WKInterfaceLabel!
     @IBOutlet var picker: WKInterfacePicker!
@@ -27,18 +29,22 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        exercise = context as? Exercise
-        let manangedObjectcontext = WatchDataModel.sharedInstance.container!.viewContext
-        session = Session(context: manangedObjectcontext)
-        session.date = NSDate()
-        if let lastSession = exercise.sessions.allObjects.last as? Session {
-            session.reps = lastSession.reps
-            session.weight = lastSession.weight
-            session.time = lastSession.time
-            session.speed = lastSession.speed
-            session.distance = lastSession.distance
-            session.exercise = exercise
-            exercise.sessions = exercise.sessions.adding(session) as NSSet
+        exercise = context as? TransferrableExercise
+        
+        WCSession.default().sendMessage(["lastSession" : exercise.primaryKey], replyHandler: { result in
+        
+            
+            if let denomDictionary = result["denominations"] as? [[String: Any]] {
+                self.denominations = denomDictionary.flatMap { TransferrableDenomination(ascending: $0["ascending"] as! Bool, incrementWholeNumber: $0["incrementWholeNumber"] as! Bool, name: $0["name"] as! String, suffix: $0["suffix"] as! String? )}
+            }
+            
+            if let amountsDictionary = result["amounts"] as? [[String: Any]] {
+                self.amounts = amountsDictionary.flatMap( { TransferrableAmount(amount: $0["amount"] as! Double, denominationName: $0["denominationName"] as! String) })
+            
+            }
+            self.setup()
+        }) { (error) in
+            print(error)
         }
         
         crownSequencer.delegate = self
@@ -53,18 +59,27 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
         
 
         self.titleLabel.setText(exercise.name)
-        if let tracked =  exercise.trackedAttributes.firstObject as? String {
+        
+        //denomination first
+        //let amounts = session.amounts?.allObjects as! [TransferrableAmount]
+       
+    }
+    
+    func setup() {
+        let currentDenom = denominations.first
+        if let amount = amounts.first(where: {
+            $0.denominationName == currentDenom?.name
+        }) {
             
-            self.currentlyTrackedAttribute = tracked
-            
-            self.valueButton.setTitle("\(session.value(forKey: tracked)!)")
-            
-            self.picker.setItems(exercise.trackedAttributes.map {
-                let picker =  WKPickerItem()
-                picker.title = ($0 as! String)
-                return picker
-            })
+            self.currentlyTrackedAttribute = self.denominations.first(where: {$0.name == amount.denominationName})
+            self.valueButton.setTitle("\(amount.amount)")
         }
+        
+        self.picker.setItems(denominations.map {
+            let picker =  WKPickerItem()
+            picker.title = $0.name
+            return picker
+        })
     }
     
     override func willDisappear() {
@@ -75,13 +90,32 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
     
     public func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
         
-        var value: Double = session.value(forKey: currentlyTrackedAttribute!) as! Double
+        //create an amount
+        //get value
+        //increment value
+        //save it
         
-        value = value + (rotationalDelta > 0 ? 0.5 : -0.5)
-        
-        session.setValue(value, forKey: currentlyTrackedAttribute!)
-        
-        self.valueButton.setTitle("\(value)")
+        if let amount = amounts.first(where: { $0.denominationName == self.currentlyTrackedAttribute?.name } ) {
+            var value = amount.amount
+            
+            if let denom = self.currentlyTrackedAttribute,  denom.incrementWholeNumber {
+                value = value + (rotationalDelta > 0 ? 1 : -1)
+                let newAmount = TransferrableAmount(amount: value, denominationName: amount.denominationName)
+                self.valueButton.setTitle("\(Int(newAmount.amount))")
+                self.amounts = self.amounts.filter({ $0.denominationName != self.currentlyTrackedAttribute?.name }) + [newAmount]
+                
+            } else {
+                value = value + (rotationalDelta > 0 ? 0.5 : -0.5)
+                let newAmount = TransferrableAmount(amount: value, denominationName: amount.denominationName)
+                self.valueButton.setTitle("\(newAmount.amount)")
+                self.amounts = self.amounts.filter({ $0.denominationName != self.currentlyTrackedAttribute?.name }) + [newAmount]
+            }
+            
+            
+            
+            
+            
+        }
 
     }
     
@@ -95,8 +129,13 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
     
     
     @IBAction func pickerAction(_ value: Int) {
-        self.currentlyTrackedAttribute = exercise.trackedAttributes[value] as? String
-        self.valueButton.setTitle("\(session.value(forKey: self.currentlyTrackedAttribute!)!)")
+        self.currentlyTrackedAttribute = self.denominations[value]
+        
+        if let amount = amounts.filter( { $0.denominationName == self.currentlyTrackedAttribute?.name } ).first {
+            self.valueButton.setTitle("\(amount.amount)")
+        } else {
+            self.valueButton.setTitle("")
+        }
     }
     
     override func pickerDidFocus(_ picker: WKInterfacePicker) {
@@ -115,23 +154,17 @@ class AddSessionInterfaceController: WKInterfaceController, WKCrownDelegate {
 
     @IBAction func saveTouchedUpInside() {
         //save session.
-        //record it in the changelog.
-        do {
-            try WatchDataModel.sharedInstance.container?.viewContext.save()
-        } catch {
-            print(error)
-        }
-        
         var sessionDict:[NSString: Any] = [:]
-        
-        for attr in Session.attributes {
-            if self.session.value(forKey: attr) as! Double > 0 {
-                
-                sessionDict.updateValue(NSNumber(value: (self.session.value(forKey: attr) as! Double)), forKey: attr as NSString)
-            }
+            
+        var amountDict:[NSString: Any] = [:]
+        for amount in amounts  {
+            amountDict.updateValue(NSNumber(value: amount.amount), forKey: amount.denominationName as NSString)
         }
-        sessionDict.updateValue(NSNumber(value:session.date!.timeIntervalSince1970), forKey: "date")
-        sessionDict.updateValue(session.exercise!.primaryKey!, forKey: "exercisePK")
+        
+        sessionDict.updateValue(amountDict, forKey: "amounts")
+        
+        sessionDict.updateValue(NSNumber(value:Date().timeIntervalSince1970), forKey: "date")
+        sessionDict.updateValue(exercise.primaryKey, forKey: "exercisePK")
         
         WCSession.default().sendMessage(["session": sessionDict], replyHandler: nil, errorHandler: { (error) -> Void in
             print(error)

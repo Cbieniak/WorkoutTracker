@@ -10,18 +10,11 @@ import Foundation
 import CoreData
 
 
-public class Session: NSManagedObject {
+public class Session: NSManagedObject, Dictionariable {
     
-    static func trackedAttributeSuffix(attr: String) -> String {
-        if attr == "reps" { return "reps" }
-        if attr == "time" { return "seconds" }
-        if attr == "weight" { return "kg" }
-        if attr == "speed" { return "kmph" }
-        if attr == "distance" { return "km" }
-        return ""
-    }
+    static var serializableAttributes: [String] = ["date"]
     
-    func descriptiveString() -> String {
+    func descriptiveString(excludeDate: Bool = false) -> String {
         
         let formatter = DateFormatter()
         formatter.locale = NSLocale.current
@@ -32,8 +25,12 @@ public class Session: NSManagedObject {
         let currentAmounts = self.amounts!.allObjects as! [Amount]
         let currentAmountString = currentAmounts.map { ($0.denomination.incrementWholeNumber ? String(describing: Int($0.amountValue)) : String(describing: Int($0.amountValue))) + " " + ($0.denomination.suffix ?? $0.denomination.name) + "\n" }
         let sessionInfo:String = currentAmountString.reduce(""){ $0 + $1 }
-
-        return sessionInfo + dateStr
+        if excludeDate {
+            return sessionInfo
+        } else {
+            return sessionInfo + dateStr  
+        }
+        
         
     }
 }
@@ -45,15 +42,22 @@ extension Session {
     }
     
     @NSManaged public var date: NSDate?
-    @NSManaged public var reps: Double
-    @NSManaged public var time: Double
-    @NSManaged public var distance: Double
-    @NSManaged public var weight: Double
-    @NSManaged public var speed: Double
     @NSManaged public var exercise: Exercise?
     
     @NSManaged public var amounts: NSSet?
     
     static let attributes: [String] = ["reps", "distance", "weight", "time", "speed"]
     
+    func valueForDeonomination(denom: Denomination) -> Double {
+        if let valArray = self.amounts?.allObjects as? [Amount] {
+            if let val = valArray.first( where: {
+                $0.denomination == denom
+            }) {
+                return val.amountValue
+            }
+        }
+        return 0
+    }
+    
 }
+

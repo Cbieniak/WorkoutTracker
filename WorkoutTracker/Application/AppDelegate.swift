@@ -80,10 +80,35 @@ extension AppDelegate: WCSessionDelegate {
     /** Called when all delegate callbacks for the previously selected watch has occurred. The session can be re-activated for the now selected watch using activateSession. */
     @available(iOS 9.3, *)
     public func sessionDidDeactivate(_ session: WCSession){}
-
+    
+    public func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        
+        if message.keys.contains("exercises") {
+            let allExercises = Datamodel.allExercises()
+            replyHandler(["exercises" : allExercises.map({$0.convert().toDictionary()})])
+        }
+        
+        if message.keys.contains("lastSession") {
+            if let lastExercise = Datamodel.allExercises().first {
+                let amounts = ((lastExercise.sessions.allObjects.last as! Session).amounts?.allObjects as! [Amount])
+                
+                let dictionary: [String : Any] = ["denominations" : (lastExercise.denominations.array as! [Denomination]).map({ TransferrableDenomination(ascending: $0.ascending, incrementWholeNumber: $0.incrementWholeNumber, name: $0.name, suffix: $0.suffix ).toDictionary()}),
+                                  "amounts" : amounts.map({ TransferrableAmount(amount: $0.amountValue, denominationName: $0.denomination.name).toDictionary()})]
+                
+                replyHandler(dictionary)
+                
+            }
+           
+            //"amounts"
+            //denominations
+        }
+        
+    }
     
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        
+        //Exercises
+        //Latest session
+        //-> Amounts
         if message.keys.contains("session") {
             
             let session = Session(context: Datamodel.sharedInstance.container.viewContext)
@@ -95,40 +120,30 @@ extension AppDelegate: WCSessionDelegate {
                     exercise.sessions = exercise.sessions.adding(session) as NSSet
                 } else if key == "date" {
                     session.setValue(Date.init(timeIntervalSince1970: (val as! NSNumber).doubleValue), forKey: "date")
-                } else if val is NSNumber {
-                    session.setValue((val as! NSNumber).doubleValue, forKey: key as String)
+                } else if key == "amounts" {
+                    session.amounts = NSSet()
+                    let dict = val as! [NSString : Any]
+                    for (denom, amountValue) in dict {
+                        let amount = Amount(context: Datamodel.sharedInstance.container.viewContext)
+                        amount.amountValue = (amountValue as! NSNumber).doubleValue
+                        
+                        let denomination: Denomination = Datamodel.allDenominations().first(where: { $0.name == (denom as String)})!
+                        
+                        amount.denomination = denomination
+                        amount.session = session
+                        var amounts = session.amounts?.allObjects as! [Amount]
+                        amounts.append(amount)
+                        session.amounts = NSSet(array: amounts)
+                            
+                    }
+                    
                 }
                 
             }
 
         }
+
         
-        do {
-            try Datamodel.sharedInstance.container.viewContext.save()
-        } catch {
-            print(error)
-        }
-        
-        if let url = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first?.url {
-            
-            var newURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            newURL = newURL.appendingPathComponent("dbackup.sqlite")
-            
-            do {
-                try FileManager.default.removeItem(at: newURL)
-            } catch {
-                print(error)
-            }
-            
-            if let nuStore = Datamodel.sharedInstance.container.persistentStoreCoordinator.persistentStores.first {
-                //https://developer.apple.com/library/content/qa/qa1809/_index.html
-                let persistentStore = try! Datamodel.sharedInstance.container.persistentStoreCoordinator.migratePersistentStore(nuStore, to: newURL, options: nil, withType: NSSQLiteStoreType)
-                try! Datamodel.sharedInstance.container.persistentStoreCoordinator.remove(persistentStore)
-                session.transferFile(newURL, metadata: nil)
-                try! Datamodel.sharedInstance.container.persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
-            }
-            
-        }
     }
     
 }

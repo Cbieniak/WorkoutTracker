@@ -18,26 +18,19 @@ class SessionCollectionViewCell: UICollectionViewCell {
         
         self.backgroundColor = .white
         
-        self.layer.borderWidth = 1.0
-        self.layer.borderColor = orange.cgColor
-        
-        self.titleLabel.textColor = orange
-        
-        self.layer.cornerRadius = 10.0
-        
     }
     
-    override var isHighlighted: Bool {
-        didSet {
-            if isHighlighted {
-                self.backgroundColor = .black
-                self.titleLabel.textColor = .white
-            } else {
-                self.backgroundColor = .white
-                self.titleLabel.textColor = .black
-            }
-        }
-    }
+//    override var isHighlighted: Bool {
+//        didSet {
+//            if isHighlighted {
+//                self.backgroundColor = .black
+//                self.titleLabel.textColor = .white
+//            } else {
+//                self.backgroundColor = .white
+//                self.titleLabel.textColor = .black
+//            }
+//        }
+//    }
     
 
 }

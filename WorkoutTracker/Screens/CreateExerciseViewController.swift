@@ -20,7 +20,11 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
     
     let orange =  UIColor(colorLiteralRed: 44.0/255.0, green: 62.0/255.0, blue: 80.0/255.0, alpha: 1.0)
     
+    let defaultHeight: CGFloat = 40
+    
+    @IBOutlet weak var selectedSectionHeightConstraint: NSLayoutConstraint!
   
+    @IBOutlet weak var selectedAttributesCollectionView: UICollectionView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     var exercise: Exercise!
@@ -37,17 +41,13 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture(gesture:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
+        let longPressAttributesGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture(gesture:)))
+        self.selectedAttributesCollectionView.addGestureRecognizer(longPressAttributesGesture)
         
         exercise = Exercise(context: context)
         exercise.primaryKey = UUID().uuidString
         exercise.sessions = NSSet()
         exercise.trackedAttributes = NSArray()
-
-        self.view.layer.borderColor = orange.cgColor
-        nameTextField.layer.cornerRadius = 10
-        nameTextField.layer.borderWidth = 1
-        nameTextField.textColor = orange
-        nameTextField.layer.borderColor = orange.cgColor
         
         nameTextField.delegate = self
         
@@ -56,6 +56,10 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "SessionCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
+        
+        selectedAttributesCollectionView.dataSource = self
+        selectedAttributesCollectionView.delegate = self
+        selectedAttributesCollectionView.register(UINib(nibName: "AttributeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "AttributeCollectionViewCell")
     }
     
     func reset() {
@@ -122,17 +126,30 @@ class CreateExerciseViewController: UIViewController, UITextFieldDelegate, UICol
 
 extension CreateExerciseViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 {
+        
+        switch collectionView {
+        case self.collectionView:
             return self.unselectedDenominations.count
-        } else {
+        case self.selectedAttributesCollectionView:
             return self.selectedDenominations.count
+        default:
+            return 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 1 {
-            return CGSize(width: self.collectionView.frame.width, height: 50)
+        switch collectionView {
+        case self.collectionView:
+            if section == 1 {
+                return CGSize(width: self.collectionView.frame.width, height: 50)
+            }
+            break
+        case self.selectedAttributesCollectionView:
+            break
+        default:
+            break
         }
+       
         
         return CGSize(width: 0, height: 0)
     }
@@ -146,27 +163,42 @@ extension CreateExerciseViewController: UICollectionViewDelegate, UICollectionVi
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SessionCollectionViewCell
-        let collection = (indexPath.section == 0 ? self.unselectedDenominations : self.selectedDenominations)
-        cell.titleLabel.text = collection[indexPath.row].name
-        return cell
+        
+        var collection: [Denomination] = []
+        switch collectionView {
+        case self.collectionView:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SessionCollectionViewCell
+            collection = self.unselectedDenominations
+            cell.titleLabel.text = collection[indexPath.row].name
+            return cell
+        case self.selectedAttributesCollectionView:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttributeCollectionViewCell", for: indexPath) as! AttributeCollectionViewCell
+            collection = self.selectedDenominations
+            cell.setup(collection[indexPath.row])
+            return cell
+        default:
+            break
+        }
+    
+       
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "invalid", for: indexPath)
     }
     
     func handleLongGesture(gesture: UILongPressGestureRecognizer) {
-        
+        let selectedCollectionView = gesture.view as! UICollectionView
         switch(gesture.state) {
             
         case UIGestureRecognizerState.began:
-            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
+            guard let selectedIndexPath = selectedCollectionView.indexPathForItem(at: gesture.location(in: selectedCollectionView)) else {
                 break
             }
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            selectedCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
         case UIGestureRecognizerState.changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+            selectedCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
         case UIGestureRecognizerState.ended:
-            collectionView.endInteractiveMovement()
+            selectedCollectionView.endInteractiveMovement()
         default:
-            collectionView.cancelInteractiveMovement()
+            selectedCollectionView.cancelInteractiveMovement()
         }
     }
     
@@ -175,43 +207,58 @@ extension CreateExerciseViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        if sourceIndexPath.section == destinationIndexPath.section {
-            if sourceIndexPath.section == 0 {
-                let item1 = self.unselectedDenominations[sourceIndexPath.row]
-                self.unselectedDenominations.remove(at: sourceIndexPath.row)
-                self.unselectedDenominations.insert(item1, at: destinationIndexPath.row)
-            } else {
-                let item1 = self.selectedDenominations[sourceIndexPath.row]
-                self.selectedDenominations.remove(at: sourceIndexPath.row)
-                self.selectedDenominations.insert(item1, at: destinationIndexPath.row)
-            }
-        } else if sourceIndexPath.section == 0, destinationIndexPath.section == 1 {
+        
+        switch collectionView {
+        case self.collectionView:
             let item1 = self.unselectedDenominations[sourceIndexPath.row]
             self.unselectedDenominations.remove(at: sourceIndexPath.row)
-            self.selectedDenominations.append(item1)
-        } else {
+            self.unselectedDenominations.insert(item1, at: destinationIndexPath.row)
+            break
+        case self.selectedAttributesCollectionView:
             let item1 = self.selectedDenominations[sourceIndexPath.row]
             self.selectedDenominations.remove(at: sourceIndexPath.row)
-            self.unselectedDenominations.append(item1)
+            self.selectedDenominations.insert(item1, at: destinationIndexPath.row)
+            break
+        default:break
         }
-        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-       return 2
+        return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        switch collectionView {
+        case self.collectionView:
+            return CGSize(width: 100, height: 50)
+        case self.selectedAttributesCollectionView:
+            return CGSize(width: self.selectedAttributesCollectionView.frame.width, height: 50)
+        default:
+            return CGSize.zero
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        switch collectionView {
+        case self.collectionView:
             let item = self.unselectedDenominations[indexPath.row]
             self.unselectedDenominations.remove(at: indexPath.row)
             self.selectedDenominations.append(item)
-        } else {
+
+            break
+        case self.selectedAttributesCollectionView:
             let item = self.selectedDenominations[indexPath.row]
             self.selectedDenominations.remove(at: indexPath.row)
             self.unselectedDenominations.append(item)
+            break
+        default:
+            break
         }
+        
         self.collectionView.reloadData()
+        self.selectedAttributesCollectionView.reloadData()
+        self.selectedSectionHeightConstraint.constant = self.defaultHeight + CGFloat(80 * self.selectedDenominations.count)
+        self.view.layoutIfNeeded()
     }
 }
 

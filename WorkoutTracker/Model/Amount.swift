@@ -9,7 +9,24 @@
 import Foundation
 import CoreData
 
-public class Amount: NSManagedObject {
+public struct TransferrableAmount: Equatable {
+    var amount: Double
+    var denominationName: String
+    
+    func toDictionary() -> [String: Any] {
+        return ["amount" : NSNumber(value: amount),
+                "denominationName" : denominationName]
+    }
+    
+    public static func ==(lhs: TransferrableAmount, rhs: TransferrableAmount) -> Bool {
+        return lhs.denominationName == rhs.denominationName
+    }
+}
+
+
+public class Amount: NSManagedObject, Dictionariable {
+    
+    static var serializableAttributes: [String] = ["amountValue"]
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Amount> {
         return NSFetchRequest<Amount>(entityName: "Amount");
@@ -19,4 +36,7 @@ public class Amount: NSManagedObject {
     @NSManaged public var session: Session
     @NSManaged public var denomination: Denomination
     
+    
+    
 }
+

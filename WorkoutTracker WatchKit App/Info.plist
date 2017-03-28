@@ -26,7 +26,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>bieniapps.WorkoutTracker</string>
+	<string>com.bieniapps.WorkoutTracker</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>
