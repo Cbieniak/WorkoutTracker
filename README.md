@@ -3,13 +3,9 @@ Work out progression tracker. Includes a watch kit app for phone less workouts
 
 # TODO
 
-Creation of exercises
+Tutorial
 
-Represent exercises on watch
-
-store data on watch
-
-sync when reconnected
+design
 
 1.0
 
